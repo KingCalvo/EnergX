@@ -1,0 +1,33 @@
+---
+import BaseLayout from "../layouts/baseL.astro";
+import { Image } from "astro:assets";
+import ImageFondo from "@assets/logoFoco.png";
+---
+<BaseLayout>
+  <main class="flex flex-col items-center p-8">
+    <h1 class="text-5xl font-bold mb-6">Bienvenido</h1>
+
+    <section class="flex items-center justify-center border border-black rounded-xl mb-4 w-full max-w-5xl">
+        <Image src={ImageFondo} alt="ejemplo" class="w-auto h-52 object-cover rounded-l-xl" />
+        <h2 class="text-6xl font-semibold ml-20">
+          ENERG-<span class="text-CFE-700">X</span>
+        </h2>
+      </section>
+      
+    <section class="w-full max-w-3xl space-y-4 text-justify mt-4">
+      <h3 class="text-2xl font-semibold mb-2 text-center">Misión</h3>
+      <p class="text-gray-700 text-justify">Proveer soluciones de monitoreo de consumo energético que permitan a los usuarios optimizar el uso de sus dispositivos eléctricos y reducir su impacto ambiental.</p>
+    </section>
+
+    <section class="w-full max-w-3xl space-y-4 text-justify mt-8">
+      <h3 class="text-2xl font-semibold mb-2 text-center">Visión</h3>
+      <p class="text-gray-700 text-justify">Ser líderes en tecnología de medición de consumo energético y promover un mundo más sostenible mediante el uso eficiente de la energía.</p>
+    </section>
+
+    <section class="w-full max-w-3xl space-y-4 text-justify mt-10">
+      <h3 class="text-2xl font-semibold mb-2 text-center">Información General</h3>
+      <p class="text-gray-700 text-justify">LowerG ofrece dispositivos y una aplicación web que permite a los usuarios monitorear el consumo energético de sus electrodomésticos en tiempo real. Nuestra tecnología ayuda a tomar decisiones informadas sobre el ahorro de energía, brindando una manera eficaz de reducir los costos y el impacto ambiental.</p>
+    </section>
+  </main>
+</BaseLayout>
+

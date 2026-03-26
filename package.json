@@ -1,0 +1,37 @@
+{
+  "name": "front-hack-energy",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "node server.js",
+    "build": "astro check && astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/check": "^0.9.3",
+    "@astrojs/react": "^3.6.2",
+    "@astrojs/tailwind": "^5.1.0",
+    "@astrojs/vercel": "^10.0.3",
+    "@emotion/react": "^11.13.3",
+    "@emotion/styled": "^11.13.0",
+    "@mui/material": "^6.1.0",
+    "@mui/x-charts": "^7.16.0",
+    "@supabase/supabase-js": "^2.100.1",
+    "@types/react": "^18.3.5",
+    "@types/react-dom": "^18.3.0",
+    "astro": "^4.16.9",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "express": "^4.21.1",
+    "framer-motion": "^11.5.4",
+    "postgres": "^3.4.8",
+    "react": "^18.3.1",
+    "react-d3-speedometer": "^2.2.1",
+    "react-dom": "^18.3.1",
+    "react-icons": "^5.3.0",
+    "tailwindcss": "^3.4.11",
+    "typescript": "^5.6.2"
+  }
+}

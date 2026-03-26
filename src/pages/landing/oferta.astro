@@ -1,0 +1,68 @@
+---
+import BaseLayout from "../../layouts/baseL.astro";
+import { Image } from "astro:assets";
+import checkBlue from "@assets/checkBlue.png";
+import checkB from "@assets/checkB.png";
+---
+<BaseLayout>
+    <div class="text-center font-semibold mt-7">
+        <h1 class="text-4xl mb-4">
+            <span class="text-CFE-800 tracking-wide">Planes </span>
+            <span>disponibles</span>
+        </h1>
+        <p class="pt-6 text-xl text-gray-400 font-normal px-8 md:w-full">
+            Elige un plan que se ajuste a tus necesidades:<br />
+        </p>
+    </div>
+
+    <div class="pt-10 mb-9 flex flex-col md:flex-row gap-8 justify-center items-center">
+        <!-- Basic Card -->
+        <div class="w-80 h-[26.5rem] p-8 bg-white text-center rounded-3xl shadow-xl flex flex-col justify-between">
+            <div>
+                <h1 class="text-black font-semibold text-2xl">Estándar</h1>
+                <p class="pt-2 tracking-wide">
+                    <span class="text-black text-3xl font-semibold">$0.00</span>
+                    <span class="text-gray-400 font-medium">/ mes</span>
+                </p>
+                <hr class="mt-4 border-1" />
+                <div class="pt-8">
+                    <p class="font-semibold text-gray-400 text-left flex items-center">
+                        <Image class="w-5 h-5 mr-2" src={checkBlue} alt="check" />
+                        <span><span class="text-black">Acceso al resumen</span> semanal</span>
+                    </p>
+                </div>
+            </div>
+            <a href="#" class="block w-full py-4 bg-CFE-800 mt-8 rounded-xl text-white font-medium">Elegir Plan</a>
+        </div>
+    
+        <!-- Premium Card -->
+        <div class="w-80 h-[25rem] p-8 bg-gray-900 text-center rounded-3xl text-white shadow-xl border-4 border-white transform scale-105 relative flex flex-col justify-between">
+            <div>
+                <h1 class="text-white font-semibold text-2xl">Premium</h1>
+                <p class="pt-2 tracking-wide">
+                    <span class="text-3xl font-semibold">$150</span>
+                    <span class="text-gray-400 font-medium">/ mes</span>
+                </p>
+                <hr class="mt-4 border-1 border-gray-600" />
+                <div class="pt-8">
+                    <p class="font-semibold text-gray-400 text-left flex items-center mb-4">
+                        <Image class="w-5 h-5 mr-2" src={checkB} alt="check" />
+                        <span>Acceso al resumen<span class="text-white"> semanal</span></span>
+                    </p>
+                    <p class="font-semibold text-gray-400 text-left flex items-center mb-4">
+                        <Image class="w-5 h-5 mr-2" src={checkB} alt="check" />
+                        <span>Acceso al resumen<span class="text-white"> diario</span></span>
+                    </p>
+                    <p class="font-semibold text-gray-400 text-left flex items-center">
+                        <Image class="w-5 h-5 mr-2" src={checkB} alt="check" />
+                        <span>Acceso al resumen<span class="text-white"> en tiempo real</span>
+                    </p>
+                </div>
+            </div>
+            <a href="#" class="block w-full py-4 bg-CFE-800 mt-8 rounded-xl text-white font-medium">Elegir Plan</a>
+            <div class="absolute top-4 right-4">
+                <p class="bg-CFE-800 font-semibold px-4 py-1 rounded-full uppercase text-xs">Popular</p>
+            </div>
+        </div>
+    </div>
+</BaseLayout>

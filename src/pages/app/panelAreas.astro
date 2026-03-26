@@ -1,0 +1,108 @@
+---
+import Layout from '../..//layouts/Layout.astro';
+import BaseL from '../..//layouts/BaseLayout.astro';
+import MedidorE from '../../components/app/animations/MedidorEstatico';
+import LineasG from '../../components/app/animations/Lineas.tsx';
+import { TbRefresh } from "react-icons/tb";
+
+const consumo_kWh = 1.93; //de 0 a 2 kWh 
+const dia = 70;
+const semanaKwh = dia * 7 // 7 días de la semana
+const area_m2 = 200; //BD 
+const costo_kWh = 1.2; // 1.2 MxN x KWh  
+const factor_emision_CO2e = 0.464; //Estatico por la CFE
+
+// Cálculos dinámicos
+const facturacion = semanaKwh * costo_kWh;
+const indice_kWh_m2 = semanaKwh / area_m2;
+const indice_CO2e_m2 = (semanaKwh * factor_emision_CO2e) / area_m2;
+
+const datosArea = {
+  nombre: "Recursos Humanos",
+  edificio: "Edificio 1",
+  etiquetas: "Área: 200 m²",
+  consumo_kWh,
+  area_m2,
+  facturacion,
+  indice_kWh_m2,
+  indice_CO2e_m2,
+};
+---
+
+<Layout title="LowerG">
+    <main class="h-screen w-screen">
+      <BaseL>
+        <section class="w-auto h-auto mt-3 flex items-center justify-center">
+           <div class="w-full max-w-6xl bg-white border border-gray-300 rounded-lg shadow-lg p-4">
+                <div class="flex justify-between items-center mb-2">
+                    <div>
+                        <h1 class="text-2xl font-bold">{datosArea.nombre}</h1>
+                        <p class="text-gray-600">{datosArea.edificio}</p>
+                        <p class="text-gray-600">{datosArea.etiquetas}</p>
+                    </div>
+                    <div class="flex gap-3">
+                        <select class="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-CFE-800 mr-3">
+                            <option value="" disabled selected>Alertas</option>
+                            <option value="correoA">Correo</option>
+                            <option value="whatsapp">WhatsApp</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <!-- Evolución de la potencia -->
+                    <div class="bg-gray-100 border border-gray-300 rounded-lg p-1 flex flex-col items-center justify-center">
+                        <p class="font-bold mb-2">Evolución de la potencia</p>
+                        <LineasG client:load />
+                    </div>
+        
+                    <div class="bg-gray-100 border border-gray-300 rounded-lg p-2 flex flex-col items-center">
+                        <!-- Contenedor horizontal con distribución -->
+                        <div class="flex items-center justify-between w-full mb-2">
+                            <!-- Texto alineado a la izquierda -->
+                            <p class="font-bold">Consumo en kWh</p>
+                            <!-- Ícono e input alineados a la derecha -->
+                            <div class="flex items-center gap-4">
+                                <div class="flex items-center justify-center rounded-lg">
+                                    <TbRefresh className="text-gray-700 text-3xl" />
+                                </div>
+                                <select class="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-CFE-800">
+                                    <option value="" disabled selected class="text-center font-semibold">Tiempo</option>
+                                    <option value="cincoM">5 minutos</option>
+                                    <option value="diezM">10 minutos</option>
+                                </select>
+                            </div>
+                        </div>
+                        <!-- Medidor debajo -->
+                        <MedidorE client:load />
+                    </div>                    
+        
+                    <!-- Facturación -->
+                    <div class="bg-gray-100 border border-gray-300 rounded-lg p-2 flex items-center justify-center">
+                        <p class="font-bold">Facturación por semana:</p>
+                        <span class=" ont-bold ml-1">${datosArea.facturacion.toFixed(2)} MXN</span>
+                    </div>
+        
+                    <!-- Índices de consumo -->
+                    <div class="bg-gray-100 border border-gray-300 rounded-lg p-4">
+                        <!-- Título centrado arriba -->
+                        <h2 class="font-bold text-center mb-2">Índices de consumo</h2>
+                        <!-- Contenedor para los párrafos -->
+                        <div class="flex justify-between">
+                            <!-- Párrafo a la izquierda -->
+                            <p>Consumo por m²: 
+                                <span class="font-semibold">{datosArea.indice_kWh_m2.toFixed(2)} kWh/m²</span>
+                            </p>
+                            <!-- Párrafo a la derecha -->
+                            <p>Emisión de CO2e/m²: 
+                                <span class="font-semibold">{datosArea.indice_CO2e_m2.toFixed(2)} CO2e/m²</span>
+                            </p>
+                        </div>
+                    </div>
+                    
+                </div>
+           </div>
+        </section>
+      </BaseL>
+    </main>
+</Layout>

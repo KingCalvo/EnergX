@@ -1,0 +1,30 @@
+[
+    {
+      "london": 59,
+      "paris": 60,
+      "newYork": 105,
+      "seoul": 319,
+      "month": "Lunes"
+    },
+    {
+      "london": 65,
+      "paris": 60,
+      "newYork": 106,
+      "seoul": 449,
+      "month": "Martes"
+    },
+    {
+      "london": 51,
+      "paris": 51,
+      "newYork": 95,
+      "seoul": 331,
+      "month": "Miércoles"
+    },
+    {
+      "london": 51,
+      "paris": 51,
+      "newYork": 95,
+      "seoul": 331,
+      "month": "Jueves"
+    }
+]

@@ -1,0 +1,125 @@
+---
+import { Image } from "astro:assets";
+import ImageFondo from "@assets/logoCompleto.png";
+---
+
+<section class="w-5/6 h-5/6 bg-white grid grid-cols-3 grid-rows-1 rounded-xl shadow-2xl shadow-black">
+  <figure class="col-span-2 flex justify-center items-center bg-CFE-800 rounded-l-xl">
+    <Image
+      src={ImageFondo}
+      alt="Logo EnergX"
+      class="max-w-[80%] max-h-[80%] object-contain"
+    />
+  </figure>
+
+  <form action="" method="post" class="rounded-xl col-span-1 flex items-center justify-center">
+    <div class="w-4/5 h-auto flex flex-col justify-center items-center gap-3">
+      <h2 class="text-5xl font-bold text-center">
+        ENERG-<span class="text-CFE-700">X</span>
+      </h2>
+
+      <h3 class="text-2xl font-semibold text-center">
+        Crear cuenta
+      </h3>
+
+      <input required type="text" id="nombre" placeholder="Nombre" maxlength="30" class="w-full bg-transparent border-b-2 focus:outline-none" />
+      <input required type="text" id="apellidoP" placeholder="Apellido Paterno" maxlength="30" class="w-full bg-transparent border-b-2 focus:outline-none" />
+      <input required type="text" id="apellidoM" placeholder="Apellido Materno" maxlength="30" class="w-full bg-transparent border-b-2 focus:outline-none" />
+
+      <input required type="number" id="edad" placeholder="Edad" min="13" max="99" class="w-full bg-transparent border-b-2 focus:outline-none" />
+
+      <input required type="text" id="pais" placeholder="País" maxlength="50" class="w-full bg-transparent border-b-2 focus:outline-none" />
+
+      <input required type="email" id="correo" placeholder="Correo" maxlength="50" class="w-full bg-transparent border-b-2 focus:outline-none" />
+
+      <input required type="tel" id="telefono" placeholder="Teléfono" maxlength="10" class="w-full bg-transparent border-b-2 focus:outline-none" />
+
+      <input required type="password" id="passw" placeholder="Contraseña" maxlength="64" class="w-full bg-transparent border-b-2 focus:outline-none" />
+      <input required type="password" id="confirmPassw" placeholder="Repetir Contraseña" maxlength="64" class="w-full bg-transparent border-b-2 focus:outline-none" />
+
+      <button
+        type="submit"
+        id="register"
+        class="w-full mt-4 rounded-lg bg-CFE-700 py-3 font-semibold text-white hover:bg-CFE-800 transition-all"
+      >
+        Registrar
+      </button>
+
+      <p class="font-bold text-sm flex justify-center items-center gap-2 mt-2">
+        ¿Ya tienes una cuenta?
+        <a href="/app/indexApp" class="text-CFE-700 hover:underline">LOGIN</a>
+      </p>
+    </div>
+  </form>
+</section>
+
+<script>
+  const form = document.querySelector("form");
+
+  const nombre = document.getElementById("nombre") as HTMLInputElement | null;
+  const apellidoP = document.getElementById("apellidoP") as HTMLInputElement | null;
+  const apellidoM = document.getElementById("apellidoM") as HTMLInputElement | null;
+  const edad = document.getElementById("edad") as HTMLInputElement | null;
+  const pais = document.getElementById("pais") as HTMLInputElement | null;
+  const email = document.getElementById("correo") as HTMLInputElement | null;
+  const telefono = document.getElementById("telefono") as HTMLInputElement | null;
+  const password = document.getElementById("passw") as HTMLInputElement | null;
+  const confirmPassw = document.getElementById("confirmPassw") as HTMLInputElement | null;
+
+  form?.addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    if (
+      !nombre ||
+      !apellidoP ||
+      !apellidoM ||
+      !edad ||
+      !pais ||
+      !email ||
+      !telefono ||
+      !password ||
+      !confirmPassw
+    ) {
+      alert("No se encontraron todos los campos del formulario.");
+      return;
+    }
+
+    if (password.value !== confirmPassw.value) {
+      alert("Las contraseñas no coinciden");
+      return;
+    }
+
+    const apiUrl = `${import.meta.env.PUBLIC_API_URL}/api/addUser`;
+
+    try {
+      const response = await fetch(apiUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          nombre: nombre.value,
+          apellidoP: apellidoP.value,
+          apellidoM: apellidoM.value,
+          edad: edad.value,
+          pais: pais.value,
+          correo: email.value,
+          telefono: telefono.value,
+          passw: password.value,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        alert(data?.message || "Ingresó algún dato incorrecto");
+        return;
+      }
+
+      window.location.href = "/app/indexApp";
+    } catch (error) {
+      console.error("Error en registro:", error);
+      alert("Ocurrió un error al registrar el usuario");
+    }
+  });
+</script>

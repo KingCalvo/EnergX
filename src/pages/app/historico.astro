@@ -1,0 +1,18 @@
+---
+import Layout from '../..//layouts/Layout.astro';
+import BaseL from '../..//layouts/BaseLayout.astro';
+import Barras from '../../components/app/animations/Barras';
+---
+
+<Layout title="LowerG">
+    <main class="h-screen w-screen overflow-hidden">
+        <BaseL>
+            <section class="w-full max-w-6xl bg-white border border-gray-300 rounded-lg shadow-lg p-8 ml-11 mt-32">
+              <h1 class="text-2xl font-bold text-center mb-6">Comparativa de consumo por áreas</h1>
+              <div class="w-full">
+                <Barras client:load />
+              </div>
+            </section>
+        </BaseL>
+    </main>
+</Layout>

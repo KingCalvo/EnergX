@@ -1,0 +1,8 @@
+---
+const {types, link, id} = Astro.props;
+---
+<button type={types} class="w-full bg-CFE-800 rounded-xl text-xl hover:bg-CFE-900 transition-all duration-300 shadow-md" id={id} >
+    <a href={link} class="block w-full h-full px-4 py-2" >
+        <slot />
+    </a>
+</button>

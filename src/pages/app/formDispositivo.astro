@@ -1,0 +1,146 @@
+---
+import Layout from '../..//layouts/Layout.astro';
+import BaseL from '../..//layouts/BaseLayout.astro';
+---
+
+<Layout title="LowerG">
+  <main class="h-screen w-screen overflow-hidden">
+    <BaseL>
+      <section class="w-full h-auto flex items-center justify-center mt-24">
+        <form 
+          id="dispositivoForm" 
+          class="w-full max-w-lg rounded-xl shadow-lg bg-white pl-14 pr-14 pt-4 pb-4 border border-gray-200"
+        >
+          <div class="w-full flex flex-col gap-6">
+            <h1 class="text-3xl font-semibold text-center mt-3">
+              Dispositivo
+            </h1>
+            <input 
+              required 
+              id="idPastilla" 
+              type="text" 
+              name="idPastilla" 
+              placeholder="Id-pastilla" 
+              maxlength="30" 
+              class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-CFE-700"
+            />
+            <input 
+              required 
+              id="nombreArea" 
+              type="text" 
+              name="nombreArea" 
+              placeholder="Nombre de área" 
+              maxlength="50" 
+              class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-CFE-700"
+            />
+            <input 
+              required 
+              id="metrosArea" 
+              type="number" 
+              name="metrosArea" 
+              placeholder="Metros cuadrados de área" 
+              min="1" 
+              max="9999" 
+              class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-CFE-700"
+            />
+            <select 
+            required 
+            id="tipoConsumo" 
+            name="tipoConsumo" 
+            class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-CFE-700"
+          >
+            <option value="" disabled selected>Tipo de consumo</option>
+            <option value="127v">Voltaje monofásico: 127 V</option>
+            <option value="220v">Voltaje trifásico: 220 V</option>
+          </select>
+          
+            <input 
+              required 
+              id="edificio" 
+              type="text" 
+              name="edificio" 
+              placeholder="Edificio" 
+              maxlength="50" 
+              class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-CFE-700"
+            />
+            <button 
+              type="submit" 
+              class="w-full bg-CFE-800 hover:bg-CFE-900 font-bold py-2 rounded-lg transition-all duration-300 mb-5"
+            >
+              <p class="text-white text-2xl font-semibold">Agregar</p>
+            </button>
+          </div>
+        </form>
+      </section>
+    </BaseL>
+  </main>
+</Layout>
+
+<script>
+const form = document.getElementById('dispositivoForm');
+/* const apiUrl = 'http://200.234.224.102/dispositivo'; */
+
+
+form?.addEventListener('submit', async (event) => {
+    event.preventDefault();
+
+    const token = localStorage.getItem('authToken');
+    const userId = localStorage.getItem('userId'); // Recuperar el userId
+
+    // Validar si el token y el userId están presentes
+    if (!token || !userId) {
+        alert('No se encontraron las credenciales necesarias. Por favor, inicia sesión nuevamente.');
+        window.location.href = '/app/login';
+        return;
+    }
+
+    // Capturar los valores del formulario
+    const idPastilla = document.getElementById('idPastilla') as HTMLInputElement;
+    const nombreArea = document.getElementById('nombreArea') as HTMLInputElement;
+    const metrosArea = document.getElementById('metrosArea') as HTMLInputElement;
+    const tipoConsumo = document.getElementById('tipoConsumo') as HTMLSelectElement;
+    const edificio = document.getElementById('edificio') as HTMLInputElement;
+
+    // Crear el objeto JSON con el userId y los demás datos
+    const dispositivoData = {
+        id: idPastilla.value,            // Campo único
+        nombreArea: nombreArea.value,   // String
+        metrosCuadrados: Number(metrosArea.value), // Número
+        tipoConsumo: tipoConsumo.value, // String ('120v' o '220v')
+        edificio: edificio.value,       // String
+        userId: userId                  // Agregar el userId (ObjectId) como string
+    };
+
+    console.log('Datos enviados:', dispositivoData);
+
+    try {
+        const response = await fetch("http://200.234.224.102/dispositivo", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`, // Token de autenticación
+            },
+            body: JSON.stringify(dispositivoData), // Convertir a JSON
+        });
+
+        if (!response.ok) {
+            const errorMessage = await response.text();
+            console.error('Error del servidor:', errorMessage);
+            alert(`Error: ${errorMessage}`);
+            throw new Error(`HTTP status ${response.status}`);
+        }
+
+        const data = await response.json();
+        alert('Dispositivo agregado con éxito');
+        console.log('Respuesta del servidor:', data);
+        window.location.href = '/app/panelAdm';
+    } catch (error) {
+        console.error('Error:', error);
+        alert('Hubo un problema al agregar el dispositivo');
+    }
+});
+
+
+
+
+</script>

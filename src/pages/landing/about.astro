@@ -1,0 +1,51 @@
+--- 
+import BaseLayout from "../../layouts/baseL.astro";
+import { Image } from "astro:assets";
+import ig from "@assets/ig.png";
+import TW from "@assets/TW.png";
+import YT from "@assets/YT.png";
+---
+
+<BaseLayout>
+    <div class="flex flex-col items-center p-8">
+        <div class="flex justify-between w-full max-w-4xl">
+            <div class="w-1/2 pr-8 space-y-4 text-justify">
+                <h1 class="text-4xl font-bold mb-8 text-center">ABOUT US</h1>
+                <p>Somos un grupo de estudiantes de Ingeniería en Sistemas Computacionales, motivados por la innovación tecnológica y comprometidos con la sostenibilidad energética. Nos unimos para desarrollar soluciones que faciliten el consumo inteligente de recursos y promuevan un impacto ambiental positivo. Nuestra propuesta, LowerG, es una respuesta a la creciente necesidad de monitorizar y gestionar el consumo eléctrico de manera eficiente y accesible.</p>
+                <h2 class="text-2xl font-semibold mt-6 text-center">Nuestra Solución</h2>
+                <p>LowerG se presenta como un sistema de monitorización de consumo eléctrico compuesto por dos partes principales: una unidad física y un software inteligente. El dispositivo físico es un módulo compacto y de fácil instalación que se conecta a la red eléctrica, equipado con sensores y un sistema de procesamiento que captura y analiza el consumo energético en tiempo real. Gracias a su módulo Wi-Fi, los datos recopilados se envían a la nube para un análisis detallado.</p>
+            </div>
+            
+            <!-- Sección de Ubicación con el mapa -->
+            <div class="w-1/2 flex flex-col items-center pl-36">
+                <h2 class="text-4xl font-bold mb-8">UBICACIÓN</h2>
+                <div class="w-[500px] h-[490px]">
+                    <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3175.4848845497954!2d-98.92146888575867!3d18.828913962392047!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85ce68d5b6921329%3A0x5491f37abc9f4641!2sInstituto%20Tecnol%C3%B3gico%20de%20Cuautla!5e0!3m2!1ses!2smx!4v1730266458361!5m2!1ses!2smx"
+                        width="100%"
+                        height="100%"
+                        style="border:0;"
+                        allowfullscreen=""
+                        loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-12 text-center">
+            <p class="mb-4 text-center font-semibold text-2xl">Redes sociales</p>
+            <div class="flex space-x-4 justify-center">
+                <a href="https://www.instagram.com/enriquecalvog/"
+                ><Image src={ig} alt="Instagram" class="w-8 h-8"
+              /></a>
+              <a href="https://www.twitch.tv/calvotw"
+                ><Image src={TW} alt="Twitch" class="w-8 h-8"
+              /></a>
+              <a href="https://www.youtube.com/@King_Calvo"
+                ><Image src={YT} alt="YouTube" class="w-8 h-8"
+              /></a>
+            </div>
+        </div>
+    </div>
+</BaseLayout>

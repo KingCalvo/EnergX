@@ -1,0 +1,117 @@
+---
+import Layout from '../..//layouts/Layout.astro';
+import BaseL from '../..//layouts/BaseLayout.astro';
+import Happy from "@assets/mascota_happy.png";
+import Sad from "@assets/mascota_sad.png"
+
+import Data from "../../data/region_one.json";
+import DataTwo from "../../data/region_two.json";
+import frases from "../../data/consejos.json";
+
+import Mascota from '@components/app/animations/Mascota';
+import { Image } from "astro:assets"
+
+/* 	let sumaData = 0;
+  	let sumaDataTwo = 0;
+  	// Recorremos solo hasta la cantidad de elementos que tiene DataTwo
+  	for (let i = 0; i < DataTwo.length; i++) {
+  	  sumaData += Data[i].seoul;
+  	  sumaDataTwo += DataTwo[i].seoul;
+  	} */
+
+/*   	// Calculamos los promedios
+  	const promedioData = sumaData / DataTwo.length;
+  	const promedioDataTwo = sumaDataTwo / DataTwo.length;
+
+	//Consejos
+	const numeroAleatorio = Math.floor(Math.random() * 15);
+	const positive = frases[0].phrases[numeroAleatorio]
+	const negative = frases[1].phrases[numeroAleatorio]
+	
+	// Porcentaje ahorrado o incrementado
+	const resultado = ((promedioDataTwo - promedioData) / promedioData) * 100 */
+
+	// Valores estáticos
+const promedioData = 242.25; // Semana pasada
+const promedioDataTwo = 588.00; // Semana actual
+
+// Consejos
+const numeroAleatorio = Math.floor(Math.random() * 15);
+const positive = frases[0].phrases[numeroAleatorio];
+const negative = frases[1].phrases[numeroAleatorio];
+
+// Porcentaje ahorrado o incrementado
+const resultado = ((promedioDataTwo - promedioData) / promedioData) * 100;
+---
+<Layout title="LowerG">
+	<main class="h-screen w-screen overflow-hidden">
+	  	<BaseL>
+			<div class="flex-grow bg-white p-4 grid grid-cols-3 gap-4 w-full">
+				<div class="col-span-1 flex flex-col gap-4">
+					<a href="/app/formDispositivo" class="flex items-center justify-center bg-CFE-800 rounded-xl text-xl hover:bg-CFE-900 transition-all duration-300 shadow-md w-full h-16 mt-36">
+						<h2 class="text-center text-white font-semibold">Registrar nuevo dispositivo</h2>
+					</a>
+
+					<div class="bg-slate-300 rounded-xl shadow-black shadow-md flex flex-col items-center justify-between h-auto p-4 mt-10">
+						<h2 class="text-center text-2xl font-semibold">Áreas</h2>
+						<ol class="w-full flex flex-col text-slate-900 gap-2 pl-6 mt-4 list-decimal">
+							<li class="font-light">
+							  <a href="/app/panelAreas" class="text-CFE-800 font-bold hover:text-CFE-900 transition-all">Recursos humanos</a>
+							</li>
+							<li class="font-light">
+							  <a href="/app/panelAreas" class="text-CFE-800 font-bold hover:text-CFE-900 transition-all">Ventas</a>
+							</li>
+							<li class="font-light">
+							  <a href="/app/panelAreas" class="text-CFE-800 font-bold hover:text-CFE-900 transition-all">Departamento de cómputo</a>
+							</li>
+						  </ol>
+						  
+						<a href="/app/historico" class="text-lg flex items-center justify-center bg-CFE-800 rounded-xl hover:bg-CFE-900 transition-all duration-300 shadow-md w-32 h-10 p-2 mt-6">
+						<h2 class="text-center text-white font-semibold">Ver más</h2>
+						</a>
+					</div>
+				</div>
+
+				<aside class="col-span-2 bg-slate-300 rounded-xl shadow-black shadow-md flex flex-col items-center justify-start p-6 h-[85vh]">
+					<h3 class="w-4/5 mx-auto text-center py-4 text-2xl font-bold">
+						Por un consumo de energía más amigable para todos.
+					</h3>
+
+					<ul class="w-full flex flex-col gap-4 pl-8 pt-5 text-slate-900">
+						<li class="font-light">Promedio de consumo de la semana pasada: <span class="text-CFE-900 font-bold">{promedioData} Kwh</span></li>
+						<li class="font-light">Promedio de consumo de la semana actual: <span class="text-CFE-900 font-bold">{promedioDataTwo} Kwh</span></li>
+					</ul>
+
+					<div class="flex items-center gap-4 mt-4 pt-20">
+						<Mascota client:load>
+						<div class="w-56 h-56 bg-slate-200 shadow-lg shadow-black rounded-full flex items-center justify-center p-4">
+							<p class="text-sm text-center">
+							{promedioData > promedioDataTwo 
+								? positive + " Ahorraste el " + (Math.round(resultado) * -1) + "%" 
+								: negative + " Gastaste un " + Math.round(resultado) + "% más de tu consumo habitual."
+							}
+							</p>
+						</div>
+						</Mascota>
+
+						<Mascota client:load>
+							{promedioData > promedioDataTwo ? (
+								<Image
+									src={Happy}
+									alt="Example"
+									class="w-60 h-60 object-cover transition-all hover:rotate-45 hover:cursor-pointer"
+								/>
+							) : (
+								<Image
+									src={Sad}
+									alt="Example"
+									class="w-60 h-60 object-cover transition-all hover:rotate-45 hover:cursor-pointer"
+								/>
+							)}
+						</Mascota>
+					</div>
+				</aside>
+			</div>
+		</BaseL>
+	</main>
+</Layout>

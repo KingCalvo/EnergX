@@ -1,0 +1,25 @@
+---
+import Header from "@components/app/Header.astro";
+import UserAside from "@components/app/UserAside";
+import ImageFondo from "@assets/mascota_happy.png";
+import { Image } from "astro:assets";
+---
+
+<div class="h-screen flex flex-col">
+  <Header />
+  <section class="flex flex-grow">
+    <div class="flex flex-col items-center bg-CFE-600 p-4 w-64">
+      <UserAside client:load />
+      <figure class="w-full h-auto mt-4">
+        <Image
+          src={ImageFondo}
+          alt="ejemplo"
+          class="w-full h-full object-cover"
+        />
+      </figure>
+    </div>
+    <div class="flex-grow">
+      <slot />
+    </div>
+  </section>
+</div>
