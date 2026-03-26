@@ -9,22 +9,30 @@ export default function UserAside() {
   });
 
   useEffect(() => {
-    const userId = localStorage.getItem("userId");
-
-    if (!userId) return;
-
-    fetch(`${import.meta.env.PUBLIC_API_URL}/api/getUser/${userId}`)
-      .then((response) => response.json())
+    fetch(`${import.meta.env.PUBLIC_API_URL}/api/me`, {
+      credentials: "include",
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("No autenticado");
+        }
+        return response.json();
+      })
       .then((data) => {
+        const user = data.user;
+
         setUserData({
-          name: `${data.nombre} ${data.apellidoP} ${data.apellidoM}`.trim(),
-          email: data.correo || "Email no disponible",
-          phone: data.telefono || "Teléfono no disponible",
+          name: `${user.nombre} ${user.apellido_p} ${user.apellido_m}`.trim(),
+          email: user.correo || "Email no disponible",
+          phone: user.telefono || "Teléfono no disponible",
         });
       })
-      .catch((error) =>
-        console.error("Error al obtener los datos del usuario:", error),
-      );
+      .catch((error) => {
+        console.error("Error al obtener el usuario:", error);
+
+        // opcional: redirigir si no hay sesión
+        window.location.href = "/app/indexApp";
+      });
   }, []);
 
   return (
@@ -34,7 +42,10 @@ export default function UserAside() {
       </div>
 
       <article className="flex flex-col items-center gap-8 text-center mt-2">
-        <h2 className="text-black mt-2 text-xl font-bold">{userData.name}</h2>
+        <h2 className="text-black mt-2 text-xl font-bold">
+          {userData.name || "Cargando..."}
+        </h2>
+
         <ul className="text-slate-700 flex flex-col items-center gap-2 text-xl">
           <li className="mt-2">{userData.email}</li>
           <li className="mt-2">{userData.phone}</li>

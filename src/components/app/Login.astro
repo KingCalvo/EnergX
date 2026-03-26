@@ -68,43 +68,33 @@ import ImageFondo from "@assets/logoCompleto.png";
   const email = document.getElementById("emailLogin") as HTMLInputElement | null;
   const password = document.getElementById("password") as HTMLInputElement | null;
 
-  form?.addEventListener("submit", async (event) => {
-    event.preventDefault();
+form?.addEventListener("submit", async (event) => {
+  event.preventDefault();
 
-    if (!email || !password) {
-      alert("No se encontraron los campos del formulario.");
-      return;
+  if (!email || !password) return;
+
+  const response = await fetch(
+    `${import.meta.env.PUBLIC_API_URL}/api/login`,
+    {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        correo: email.value,
+        passw: password.value,
+      }),
     }
+  );
 
-    const apiUrl = `${import.meta.env.PUBLIC_API_URL}/api/login`;
+  const result = await response.json();
 
-    try {
-      const response = await fetch(apiUrl, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          correo: email.value,
-          passw: password.value,
-        }),
-      });
+  if (!response.ok) {
+    alert(result.message || "Error al iniciar sesión");
+    return;
+  }
 
-      const result = await response.json();
-
-      if (!response.ok) {
-        alert(result?.message || "El usuario o contraseña son incorrectos");
-        return;
-      }
-
-      if (result?.user?.idUsuario) {
-        localStorage.setItem("userId", String(result.user.idUsuario));
-      }
-
-      window.location.href = "/app/panelAdm";
-    } catch (error) {
-      console.error("Error en login:", error);
-      alert("Ocurrió un error al iniciar sesión");
-    }
-  });
+  window.location.href = "/app/panelAdm";
+});
 </script>
