@@ -1,7 +1,20 @@
 ---
-import Layout from '../..//layouts/Layout.astro';
-import BaseL from '../..//layouts/BaseLayout.astro';
+import Layout from '../../layouts/Layout.astro';
+import BaseL from '../../layouts/BaseLayout.astro';
 ---
+<script>
+  fetch(`${import.meta.env.PUBLIC_API_URL}/api/me`, {
+    credentials: "include",
+  })
+    .then((res) => {
+      if (!res.ok) {
+        window.location.href = "/app/indexApp";
+      }
+    })
+    .catch(() => {
+      window.location.href = "/app/indexApp";
+    });
+</script>
 
 <Layout title="LowerG">
   <main class="h-screen w-screen overflow-hidden">

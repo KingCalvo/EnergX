@@ -1,6 +1,6 @@
 ---
 import { Image } from "astro:assets";
-import ImageFondo from "@assets/logoCompleto.png";
+import ImageFondo from "../../assets/logoCompleto.png";
 ---
 
 <section class="w-5/6 h-5/6 bg-white grid grid-cols-3 grid-rows-1 rounded-xl shadow-2xl shadow-black">
@@ -89,10 +89,8 @@ import ImageFondo from "@assets/logoCompleto.png";
       return;
     }
 
-    const apiUrl = `${import.meta.env.PUBLIC_API_URL}/api/addUser`;
-
     try {
-      const response = await fetch(apiUrl, {
+      const registerResponse = await fetch(`${import.meta.env.PUBLIC_API_URL}/api/addUser`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -109,14 +107,44 @@ import ImageFondo from "@assets/logoCompleto.png";
         }),
       });
 
-      const data = await response.json();
+      const registerData = await registerResponse.json().catch(() => null);
 
-      if (!response.ok) {
-        alert(data?.message || "Ingresó algún dato incorrecto");
+      if (!registerResponse.ok) {
+        alert(registerData?.message || "No se pudo registrar el usuario");
         return;
       }
 
-      window.location.href = "/app/indexApp";
+      const loginResponse = await fetch(`${import.meta.env.PUBLIC_API_URL}/api/login`, {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          correo: email.value,
+          passw: password.value,
+        }),
+      });
+
+      const loginData = await loginResponse.json().catch(() => null);
+
+      if (!loginResponse.ok) {
+        alert(loginData?.message || "Usuario creado, pero no se pudo iniciar sesión");
+        window.location.replace("/app/indexApp");
+        return;
+      }
+
+      const meResponse = await fetch(`${import.meta.env.PUBLIC_API_URL}/api/me`, {
+        credentials: "include",
+      });
+
+      if (!meResponse.ok) {
+        alert("Usuario creado, pero la sesión no se pudo confirmar");
+        window.location.replace("/app/indexApp");
+        return;
+      }
+
+      window.location.replace("/app/panelAdm");
     } catch (error) {
       console.error("Error en registro:", error);
       alert("Ocurrió un error al registrar el usuario");

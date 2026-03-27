@@ -1,11 +1,24 @@
 ---
-import Layout from '../..//layouts/Layout.astro';
-import BaseL from '../..//layouts/BaseLayout.astro';
-import GraphicsBuilding from '@components/app/animations/GraphicsBuilding';
+import Layout from '../../layouts/Layout.astro';
+import BaseL from '../../layouts/BaseLayout.astro';
+import GraphicsBuilding from '../../components/app/animations/GraphicsBuilding';
 import { FaBuilding } from "react-icons/fa6";
 
 const articles = Array.from({ length: 12 }, (_, index) => index + 1);
 ---
+<script>
+  fetch(`${import.meta.env.PUBLIC_API_URL}/api/me`, {
+    credentials: "include",
+  })
+    .then((res) => {
+      if (!res.ok) {
+        window.location.href = "/app/indexApp";
+      }
+    })
+    .catch(() => {
+      window.location.href = "/app/indexApp";
+    });
+</script>
 <Layout title="LowerG">
 	<main>
 		<BaseL>

@@ -1,8 +1,8 @@
 ---
-import Layout from '../..//layouts/Layout.astro';
-import BaseL from '../..//layouts/BaseLayout.astro';
+import Layout from '../../layouts/Layout.astro';
+import BaseL from '../../layouts/BaseLayout.astro';
 import MedidorE from '../../components/app/animations/MedidorEstatico';
-import LineasG from '../../components/app/animations/Lineas.tsx';
+import LineasG from '../../components/app/animations/Lineas';
 import { TbRefresh } from "react-icons/tb";
 
 const consumo_kWh = 1.93; //de 0 a 2 kWh 
@@ -28,6 +28,20 @@ const datosArea = {
   indice_CO2e_m2,
 };
 ---
+<script>
+  fetch(`${import.meta.env.PUBLIC_API_URL}/api/me`, {
+    credentials: "include",
+  })
+    .then((res) => {
+      if (!res.ok) {
+        window.location.href = "/app/indexApp";
+      }
+    })
+    .catch(() => {
+      window.location.href = "/app/indexApp";
+    });
+</script>
+
 
 <Layout title="LowerG">
     <main class="h-screen w-screen">

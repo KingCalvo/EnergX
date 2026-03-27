@@ -3,22 +3,37 @@ import { FaUserCircle } from "react-icons/fa";
 
 export default function UserAside() {
   const [userData, setUserData] = useState({
-    name: "",
+    name: "Cargando...",
     email: "",
     phone: "",
   });
 
+  const [error, setError] = useState("");
+
   useEffect(() => {
-    fetch(`${import.meta.env.PUBLIC_API_URL}/api/me`, {
-      credentials: "include",
-    })
-      .then((response) => {
+    const controller = new AbortController();
+
+    const loadUser = async () => {
+      try {
+        const response = await fetch(
+          `${import.meta.env.PUBLIC_API_URL}/api/me`,
+          {
+            credentials: "include",
+            signal: controller.signal,
+          },
+        );
+
+        const data = await response.json();
+
         if (!response.ok) {
-          throw new Error("No autenticado");
+          if (response.status === 401) {
+            setError("Sesión no iniciada");
+          } else {
+            setError(data?.message || "No se pudo cargar el usuario");
+          }
+          return;
         }
-        return response.json();
-      })
-      .then((data) => {
+
         const user = data.user;
 
         setUserData({
@@ -26,13 +41,17 @@ export default function UserAside() {
           email: user.correo || "Email no disponible",
           phone: user.telefono || "Teléfono no disponible",
         });
-      })
-      .catch((error) => {
-        console.error("Error al obtener el usuario:", error);
+      } catch (err) {
+        if (err.name !== "AbortError") {
+          console.error("Error al obtener el usuario:", err);
+          setError("No se pudo cargar el usuario");
+        }
+      }
+    };
 
-        // opcional: redirigir si no hay sesión
-        window.location.href = "/app/indexApp";
-      });
+    loadUser();
+
+    return () => controller.abort();
   }, []);
 
   return (
@@ -43,7 +62,7 @@ export default function UserAside() {
 
       <article className="flex flex-col items-center gap-8 text-center mt-2">
         <h2 className="text-black mt-2 text-xl font-bold">
-          {userData.name || "Cargando..."}
+          {error ? error : userData.name}
         </h2>
 
         <ul className="text-slate-700 flex flex-col items-center gap-2 text-xl">

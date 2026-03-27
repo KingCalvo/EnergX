@@ -1,29 +1,48 @@
 ---
 import { FaPowerOff } from 'react-icons/fa'
 import { Image } from "astro:assets";
-import ImageFondo from "@assets/LogoTexto.png";
+import ImageFondo from "../../assets/LogoTexto.png";
 import { FaArrowLeft } from "react-icons/fa";
 ---
+
 <header class="bg-CFE-800 flex justify-center items-center p-1 row-span-2 text-center">
   <a href="#" id="back-button">
-    <FaArrowLeft className="text-5xl"/>
+    <FaArrowLeft className="text-5xl" />
   </a>
+
   <div class="w-full flex justify-center items-center">
     <figure class="col-span-2 flex justify-center items-center">
       <Image src={ImageFondo} alt="ejemplo" class="max-w-[70%] max-h-[70%] object-contain" />
-    </figure>   
-  </div>    
-  <!-- Icono de usuario -->
+    </figure>
+  </div>
+
   <div class="w-10 h-10 flex justify-center items-center cursor-pointer mr-3">
-    <a href="/app/indexApp">
-      <FaPowerOff className="text-5xl"/>
-    </a>
+    <button type="button" id="logout-button" aria-label="Cerrar sesión">
+      <FaPowerOff className="text-5xl" />
+    </button>
   </div>
 </header>
+
 <script>
-  const backButton = document.getElementById('back-button');
-  backButton?.addEventListener('click', (event) => {
+  const backButton = document.getElementById("back-button");
+  const logoutButton = document.getElementById("logout-button");
+
+  backButton?.addEventListener("click", (event) => {
     event.preventDefault();
     window.history.back();
+  });
+
+  logoutButton?.addEventListener("click", async () => {
+    try {
+      await fetch(`${import.meta.env.PUBLIC_API_URL}/api/logout`, {
+        method: "POST",
+        credentials: "include",
+      });
+
+      window.location.href = "/app/indexApp";
+    } catch (error) {
+      console.error("Error al cerrar sesión:", error);
+      alert("No se pudo cerrar sesión");
+    }
   });
 </script>

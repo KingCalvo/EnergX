@@ -1,14 +1,14 @@
 ---
-import Layout from '../..//layouts/Layout.astro';
-import BaseL from '../..//layouts/BaseLayout.astro';
-import Happy from "@assets/mascota_happy.png";
-import Sad from "@assets/mascota_sad.png"
+import Layout from '../../layouts/Layout.astro';
+import BaseL from '../../layouts/BaseLayout.astro';
+import Happy from "../../assets/mascota_happy.png";
+import Sad from "../../assets/mascota_sad.png";
 
 import Data from "../../data/region_one.json";
 import DataTwo from "../../data/region_two.json";
 import frases from "../../data/consejos.json";
 
-import Mascota from '@components/app/animations/Mascota';
+import Mascota from '../../components/app/animations/Mascota';
 import { Image } from "astro:assets"
 
 /* 	let sumaData = 0;
@@ -43,6 +43,19 @@ const negative = frases[1].phrases[numeroAleatorio];
 // Porcentaje ahorrado o incrementado
 const resultado = ((promedioDataTwo - promedioData) / promedioData) * 100;
 ---
+<script>
+  fetch(`${import.meta.env.PUBLIC_API_URL}/api/me`, {
+    credentials: "include",
+  })
+    .then((res) => {
+      if (!res.ok) {
+        window.location.href = "/app/indexApp";
+      }
+    })
+    .catch(() => {
+      window.location.href = "/app/indexApp";
+    });
+</script>
 <Layout title="LowerG">
 	<main class="h-screen w-screen overflow-hidden">
 	  	<BaseL>
@@ -95,19 +108,11 @@ const resultado = ((promedioDataTwo - promedioData) / promedioData) * 100;
 						</Mascota>
 
 						<Mascota client:load>
-							{promedioData > promedioDataTwo ? (
-								<Image
-									src={Happy}
-									alt="Example"
-									class="w-60 h-60 object-cover transition-all hover:rotate-45 hover:cursor-pointer"
-								/>
-							) : (
-								<Image
-									src={Sad}
-									alt="Example"
-									class="w-60 h-60 object-cover transition-all hover:rotate-45 hover:cursor-pointer"
-								/>
-							)}
+							<img
+								src={promedioData > promedioDataTwo ? Happy.src : Sad.src}
+								alt="Example"
+								class="w-60 h-60 object-cover transition-all hover:rotate-45 hover:cursor-pointer"
+							/>
 						</Mascota>
 					</div>
 				</aside>
