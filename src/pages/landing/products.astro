@@ -1,80 +1,179 @@
---- 
+---
 import BaseLayout from "../../layouts/baseL.astro";
 import { Image } from "astro:assets";
 import productos from "../../assets/productos.jpeg";
-import webApp from "../../assets/webApp.png";
+import webApp from "../../assets/EnerG-X-Login.png";
 import device from "../../assets/device.jpg";
 import placa from "../../assets/placa.jpg";
+import ImageApp from "../../components/app/ImageApp";
 ---
 
 <BaseLayout>
-  <div class="flex flex-col items-center space-y-8 p-6">
-    <h1 class="text-2xl font-bold">GENERAL</h1>
-    <p class="text-gray-600 text-justify w-full max-w-3xl">
-      Dispositivo que puede ser conectado a una red eléctrica por medio de un enchufe convencional.
-      Tiene la capacidad de analizar el consumo energético de un edificio por medio de un módulo de
-      sensores y procesamiento, además de tener un módulo Wi-Fi que le permite enviar los datos
-      recopilados a un servicio en la nube, para su uso próximo.
-    </p>
 
-    <div class="flex flex-col items-center space-y-8 p-6">
-      <h2 class="text-2xl font-bold mt-8">PRODUCTOS:</h2>
-    
-      <div class="space-y-6 w-full max-w-4xl">
-        <div class="flex flex-col md:flex-row items-center border border-gray-200 shadow-lg rounded-lg p-6 space-y-4 md:space-y-0 md:space-x-6 bg-white">
-          <Image src={productos} alt="Ejemplo de dispositivo" class="rounded-lg shadow-md w-full md:w-1/3 h-48 object-cover" />
-          <div class="text-gray-600 text-justify w-full md:w-2/3 space-y-4">
-            <p>
-              El producto tiene dimensiones 6x8x4 cm, compuesto de una carcasa negra y una clavija estándar de doble fase. Su diseño compacto lo hace ideal para cualquier espacio sin ser invasivo, cuenta con tecnología de bajo consumo energético, lo que permite un monitoreo constante sin afectar el uso de energía en el hogar.
-            </p>
-            <p>
-              Este dispositivo cuenta con un sistema de actualización automática a través de su conexión a internet, asegurando que siempre esté equipado con las últimas funcionalidades. Además, su construcción a prueba de cortocircuitos y sobrecargas lo hace altamente seguro para ambientes residenciales y comerciales.
-            </p>
-          </div>
+  <!-- HERO -->
+  <section class="w-full bg-gradient-to-b from-slate-100 to-white py-16 px-4">
+    <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-10 items-center">
+
+      <div class="space-y-6">
+        <h1 class="text-4xl lg:text-5xl font-bold leading-tight">
+          Tecnología inteligente para el 
+          <span class="text-CFE-700 whitespace-nowrap">control energético</span>
+        </h1>
+
+        <p class="text-gray-600 text-lg leading-7">
+          Energ-X transforma la manera en la que monitoreas y optimizas el consumo eléctrico,
+          integrando hardware y software en una solución moderna, eficiente y sostenible.
+        </p>
+      </div>
+
+      <Image 
+        src={productos} 
+        alt="Dispositivo Energ-X"
+        width={500}
+        height={350}
+        class="rounded-2xl shadow-lg w-full h-[320px] object-cover"
+      />
+
+    </div>
+  </section>
+
+  <!-- PRODUCTOS -->
+  <section class="py-16 px-4">
+    <div class="max-w-6xl mx-auto space-y-10">
+
+      <h2 class="text-3xl font-bold text-center">Nuestros Productos</h2>
+
+      <div class="grid md:grid-cols-2 gap-8">
+
+        <!-- IZQUIERDA -->
+        <div class="bg-white rounded-2xl shadow-lg p-6 space-y-4">
+          <Image 
+            src={productos} 
+            alt="Dispositivo"
+            width={400}
+            height={300}
+            class="rounded-xl w-full h-[260px] object-cover"
+          />
+
+          <p class="text-gray-600 text-justify leading-7">
+            Dispositivo que puede ser conectado a una red eléctrica por medio de un enchufe convencional.
+            Tiene la capacidad de analizar el consumo energético de un edificio por medio de un módulo de sensores y procesamiento,
+            además de tener un módulo Wi-Fi que le permite enviar los datos recopilados a un servicio en la nube.
+
+            El producto tiene dimensiones 6x8x4 cm, compuesto de una carcasa negra y una clavija estándar.
+            Su diseño compacto lo hace ideal para cualquier espacio, con tecnología de bajo consumo energético
+            y protección contra sobrecargas, siendo seguro para entornos residenciales y comerciales.
+          </p>
         </div>
-        <div class="flex flex-col md:flex-row items-center border border-gray-200 shadow-lg rounded-lg p-6 space-y-4 md:space-y-0 md:space-x-6 bg-white">
-          <Image src={placa} alt="Ejemplo de placa" class="rounded-lg shadow-md w-full md:w-1/3 h-48 object-cover" />
-          <div class="text-gray-600 text-justify w-full md:w-2/3 space-y-4">
-            <p>
-              En la cara contigua se encuentra la salida de datos por medio de un LCD de 16x2 y un teclado de aproximadamente 4 cm. La alimentación está cubierta por la misma energía que recibe al ser enchufado. Este diseño permite una instalación rápida y fácil en cualquier enchufe disponible, convirtiéndose en una herramienta eficiente para gestionar el consumo de energía en tiempo real.
-            </p>
-            <p>
-              Con su interfaz de usuario sencilla y su display de alta visibilidad, este dispositivo facilita la lectura de datos en cualquier condición de luz. Además, incluye indicadores LED que muestran el estado de la conexión Wi-Fi y el consumo actual.
-            </p>
-          </div>
+
+        <!-- DERECHA -->
+        <div class="bg-white rounded-2xl shadow-lg p-6 space-y-4">
+          <Image 
+            src={placa} 
+            alt="Placa"
+            width={400}
+            height={300}
+            class="rounded-xl w-full h-[260px] object-cover"
+          />
+
+          <p class="text-gray-600 text-justify leading-7">
+            En la cara contigua se encuentra la salida de datos por medio de un LCD de 16x2 y un teclado de aproximadamente 4 cm. La alimentación está cubierta por la misma energía que recibe al ser enchufado. Este diseño permite una instalación rápida y fácil en cualquier enchufe disponible, convirtiéndose en una herramienta eficiente para gestionar el consumo de energía en tiempo real.
+Con su interfaz de usuario sencilla y su display de alta visibilidad, este dispositivo facilita la lectura de datos en cualquier condición de luz. Además, incluye indicadores LED que muestran el estado de la conexión Wi-Fi y el consumo actual.
+
+          </p>
         </div>
+
       </div>
     </div>
-    
-      <div class="flex flex-col items-center space-y-12 pt-">
-        <h2 class="text-2xl font-bold">Adquirir</h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-2xl">
-          <div class="flex flex-col items-center border border-gray-200 rounded-lg p-6 shadow-lg space-y-4 transition-transform transform hover:scale-105">
-            <Image src={device} alt="LowerG Device" class="rounded-lg shadow-lg w-36 h-40 object-cover" />
-            <div class="text-center">
-              <div class="text-lg font-medium text-gray-800">ENERG-X Device</div>
-              <div class="text-xl font-semibold text-gray-800 mt-1">$800</div>
-            </div>
-            <a href="#" class="block w-32 py-2 bg-CFE-800 hover:bg-CFE-900 transition-colors rounded-lg text-white font-medium text-center">Comprar</a>
-          </div>
-      
-          <div class="flex flex-col items-center border border-gray-200 rounded-lg p-6 shadow-lg space-y-4 transition-transform transform hover:scale-105">
-            <Image src={webApp} alt="Aplicación web para monitoreo" class="rounded-lg shadow-lg w-auto h-40 object-cover" />
-            <div class="text-center">
-              <div class="text-lg font-medium text-gray-800 mt-1">Aplicación web para el monitoreo del dispositivo</div>
-            </div>
-            <a href="/oferta" class="block w-32 py-2 bg-CFE-800 hover:bg-CFE-900 transition-colors rounded-lg text-white font-medium text-center">Ver planes</a>
-          </div>
-        </div>
+  </section>
+
+  <!-- WEB APP -->
+  <section class="py-20 px-4 bg-slate-50">
+    <div class="max-w-6xl mx-auto grid lg:grid-cols-2 gap-10 items-center">
+
+      <div class="space-y-6">
+        <h2 class="text-3xl lg:text-4xl font-bold">
+          Aplicación Web Energ-X
+        </h2>
+
+        <p class="text-gray-600 text-justify leading-7">
+          La aplicación web de Energ-X proporciona una plataforma integral para el monitoreo,
+          análisis y optimización del consumo energético en tiempo real, permitiendo tomar
+          decisiones inteligentes que mejoran la eficiencia y reducen costos.
+        </p>
       </div>
-      <div class="flex flex-col items-center space-y-4 pt-12 pb-4">
-        <h2 class="text-2xl font-bold text-center">Usos del dispositivo</h2>
-        <div class="w-full max-w-3xl space-y-4 text-justify">
-          <p><strong>1. Monitoreo de consumo eléctrico en hogares:</strong> Los usuarios pueden conectar dispositivos electrónicos a través del sistema LowerG para obtener información detallada sobre el consumo energético de cada equipo en el hogar. Esto les permite identificar cuáles dispositivos consumen más energía y ajustar su uso para reducir el gasto eléctrico.</p>
-          <p><strong>2. Optimización de consumo en empresas o edificios comerciales:</strong> LowerG ayuda a las empresas a analizar el consumo energético de diferentes áreas o equipos dentro de sus instalaciones. La información recopilada facilita la toma de decisiones informadas para reducir costos, implementar estrategias de ahorro energético y hacer recomendaciones sobre el uso de energías renovables.</p>
-          <p><strong>3. Educación y concienciación sobre el ahorro energético:</strong> Con el software de LowerG, los usuarios pueden visualizar gráficas y estadísticas sobre su consumo eléctrico. Esto fomenta la concienciación sobre el uso de energía y promueve la adopción de hábitos más sostenibles, como el uso de energías renovables y la desconexión de dispositivos innecesarios.</p>
-        </div>
+
+      <div>
+        <ImageApp client:load />
       </div>
+
     </div>
-  </div>
+  </section>
+
+  <!-- ADQUIRIR -->
+  <section class="py-16 px-4">
+    <h2 class="text-3xl font-bold text-center pb-8">Adquirir</h2>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 max-w-3xl mx-auto">
+
+      <!-- DEVICE -->
+      <div class="bg-white border rounded-2xl p-6 shadow-md flex flex-col items-center space-y-4 hover:scale-105 transition-all">
+        <Image 
+          src={device} 
+          alt="Dispositivo Energ-X"
+          width={200} 
+          height={200}
+          class="w-36 h-40 object-cover rounded-lg" 
+        />
+
+        <div>
+          <h3 class="text-lg font-semibold">ENERG-X Device</h3>
+          <p class="text-xl font-bold mt-1">$800 MXN</p>
+        </div>
+
+        <a href="#" class="px-6 py-2 bg-CFE-800 hover:bg-CFE-900 text-white rounded-lg">
+          Comprar
+        </a>
+      </div>
+
+      <!-- WEB APP -->
+      <div class="bg-white border rounded-2xl p-6 shadow-md flex flex-col items-center space-y-4 hover:scale-105 transition-all">
+        <Image 
+          src={webApp} 
+          alt="Aplicación web Energ-X"
+          width={400} 
+          height={250}
+          class="w-full h-40 object-cover rounded-lg" 
+        />
+
+        <div class="text-center">
+          <h3 class="text-lg font-semibold">Aplicación Web</h3>
+          <p class="text-sm text-gray-800">Monitoreo y análisis energético</p>
+        </div>
+
+        <a href="/landing/oferta" class="px-6 py-2 bg-CFE-800 hover:bg-CFE-900 text-white rounded-lg">
+          Ver planes
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- USOS -->
+  <section class="py-16 px-4 bg-slate-50">
+    <div class="max-w-4xl mx-auto space-y-6">
+
+      <h2 class="text-3xl font-bold text-center">Usos del dispositivo</h2>
+
+      <div class="text-gray-600 text-justify space-y-4 leading-7">
+        <p><strong>1. Monitoreo de consumo eléctrico en hogares:</strong> Los usuarios pueden conectar dispositivos electrónicos a través del sistema Energ-X para obtener información detallada sobre el consumo energético de cada equipo en el hogar. Esto les permite identificar cuáles dispositivos consumen más energía y ajustar su uso para reducir el gasto eléctrico.</p>
+
+        <p><strong>2. Optimización de consumo en empresas o edificios comerciales:</strong> Energ-X ayuda a las empresas a analizar el consumo energético de diferentes áreas o equipos dentro de sus instalaciones. La información recopilada facilita la toma de decisiones informadas para reducir costos, implementar estrategias de ahorro energético y hacer recomendaciones sobre el uso de energías renovables.</p>
+
+        <p><strong>3. Educación y concienciación sobre el ahorro energético:</strong> Con el software de Energ-X, los usuarios pueden visualizar gráficas y estadísticas sobre su consumo eléctrico. Esto fomenta la concienciación sobre el uso de energía y promueve la adopción de hábitos más sostenibles.</p>
+      </div>
+
+    </div>
+  </section>
+
 </BaseLayout>

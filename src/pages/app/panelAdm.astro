@@ -4,119 +4,128 @@ import BaseL from '../../layouts/BaseLayout.astro';
 import Happy from "../../assets/mascota_happy.png";
 import Sad from "../../assets/mascota_sad.png";
 
-import Data from "../../data/region_one.json";
-import DataTwo from "../../data/region_two.json";
 import frases from "../../data/consejos.json";
 
 import Mascota from '../../components/app/animations/Mascota';
-import { Image } from "astro:assets"
+import Barras from '../../components/app/animations/Barras';
 
-/* 	let sumaData = 0;
-  	let sumaDataTwo = 0;
-  	// Recorremos solo hasta la cantidad de elementos que tiene DataTwo
-  	for (let i = 0; i < DataTwo.length; i++) {
-  	  sumaData += Data[i].seoul;
-  	  sumaDataTwo += DataTwo[i].seoul;
-  	} */
+const promedioData = 242.25;
+const promedioDataTwo = 588.00;
 
-/*   	// Calculamos los promedios
-  	const promedioData = sumaData / DataTwo.length;
-  	const promedioDataTwo = sumaDataTwo / DataTwo.length;
-
-	//Consejos
-	const numeroAleatorio = Math.floor(Math.random() * 15);
-	const positive = frases[0].phrases[numeroAleatorio]
-	const negative = frases[1].phrases[numeroAleatorio]
-	
-	// Porcentaje ahorrado o incrementado
-	const resultado = ((promedioDataTwo - promedioData) / promedioData) * 100 */
-
-	// Valores estáticos
-const promedioData = 242.25; // Semana pasada
-const promedioDataTwo = 588.00; // Semana actual
-
-// Consejos
 const numeroAleatorio = Math.floor(Math.random() * 15);
 const positive = frases[0].phrases[numeroAleatorio];
 const negative = frases[1].phrases[numeroAleatorio];
 
-// Porcentaje ahorrado o incrementado
 const resultado = ((promedioDataTwo - promedioData) / promedioData) * 100;
 ---
+
 <script>
   fetch(`${import.meta.env.PUBLIC_API_URL}/api/me`, {
     credentials: "include",
   })
     .then((res) => {
-      if (!res.ok) {
-        window.location.href = "/app/indexApp";
-      }
+      if (!res.ok) window.location.href = "/app/indexApp";
     })
     .catch(() => {
       window.location.href = "/app/indexApp";
     });
 </script>
-<Layout title="LowerG">
-	<main class="h-screen w-screen overflow-hidden">
-	  	<BaseL>
-			<div class="flex-grow bg-white p-4 grid grid-cols-3 gap-4 w-full">
-				<div class="col-span-1 flex flex-col gap-4">
-					<a href="/app/formDispositivo" class="flex items-center justify-center bg-CFE-800 rounded-xl text-xl hover:bg-CFE-900 transition-all duration-300 shadow-md w-full h-16 mt-36">
-						<h2 class="text-center text-white font-semibold">Registrar nuevo dispositivo</h2>
-					</a>
 
-					<div class="bg-slate-300 rounded-xl shadow-black shadow-md flex flex-col items-center justify-between h-auto p-4 mt-10">
-						<h2 class="text-center text-2xl font-semibold">Áreas</h2>
-						<ol class="w-full flex flex-col text-slate-900 gap-2 pl-6 mt-4 list-decimal">
-							<li class="font-light">
-							  <a href="/app/panelAreas" class="text-CFE-800 font-bold hover:text-CFE-900 transition-all">Recursos humanos</a>
-							</li>
-							<li class="font-light">
-							  <a href="/app/panelAreas" class="text-CFE-800 font-bold hover:text-CFE-900 transition-all">Ventas</a>
-							</li>
-							<li class="font-light">
-							  <a href="/app/panelAreas" class="text-CFE-800 font-bold hover:text-CFE-900 transition-all">Departamento de cómputo</a>
-							</li>
-						  </ol>
-						  
-						<a href="/app/historico" class="text-lg flex items-center justify-center bg-CFE-800 rounded-xl hover:bg-CFE-900 transition-all duration-300 shadow-md w-32 h-10 p-2 mt-6">
-						<h2 class="text-center text-white font-semibold">Ver más</h2>
-						</a>
-					</div>
-				</div>
+<Layout title="Panel">
+  <main class="min-h-screen w-full overflow-x-hidden">
+    <BaseL>
 
-				<aside class="col-span-2 bg-slate-300 rounded-xl shadow-black shadow-md flex flex-col items-center justify-start p-6 h-[85vh]">
-					<h3 class="w-4/5 mx-auto text-center py-4 text-2xl font-bold">
-						Por un consumo de energía más amigable para todos.
-					</h3>
+      <div class="w-full p-3 grid gap-4 lg:grid-cols-2">
 
-					<ul class="w-full flex flex-col gap-4 pl-8 pt-5 text-slate-900">
-						<li class="font-light">Promedio de consumo de la semana pasada: <span class="text-CFE-900 font-bold">{promedioData} Kwh</span></li>
-						<li class="font-light">Promedio de consumo de la semana actual: <span class="text-CFE-900 font-bold">{promedioDataTwo} Kwh</span></li>
-					</ul>
+        <!-- IZQUIERDA -->
+        <div class="flex flex-col gap-4 lg:justify-center">
 
-					<div class="flex items-center gap-4 mt-4 pt-20">
-						<Mascota client:load>
-						<div class="w-56 h-56 bg-slate-200 shadow-lg shadow-black rounded-full flex items-center justify-center p-4">
-							<p class="text-sm text-center">
-							{promedioData > promedioDataTwo 
-								? positive + " Ahorraste el " + (Math.round(resultado) * -1) + "%" 
-								: negative + " Gastaste un " + Math.round(resultado) + "% más de tu consumo habitual."
-							}
-							</p>
-						</div>
-						</Mascota>
+          <!-- TEXTO -->
+          <div class="bg-slate-300 rounded-xl p-4 shadow-md">
+            <p class="text-sm sm:text-base text-justify">
+              Bienvenido al panel de administración de Energ-X. Desde aquí puedes registrar nuevos dispositivos, gestionar las áreas monitoreadas y analizar el consumo energético en tiempo real. Nuestra plataforma está diseñada para brindarte control, eficiencia y una visión clara del uso de energía en tu entorno.
+            </p>
+          </div>
 
-						<Mascota client:load>
-							<img
-								src={promedioData > promedioDataTwo ? Happy.src : Sad.src}
-								alt="Example"
-								class="w-60 h-60 object-cover transition-all hover:rotate-45 hover:cursor-pointer"
-							/>
-						</Mascota>
-					</div>
-				</aside>
-			</div>
-		</BaseL>
-	</main>
+          <!-- BOTÓN -->
+          <a href="/app/formDispositivo"
+            class="flex items-center justify-center bg-CFE-800 rounded-xl text-white font-semibold h-14 sm:h-16 hover:bg-CFE-900 transition-all">
+            Registrar nuevo dispositivo
+          </a>
+
+          <!-- ÁREAS -->
+          <div class="bg-slate-300 rounded-xl p-4 shadow-md">
+            <h2 class="text-center text-2xl font-semibold">Áreas</h2>
+
+            <ol class="mt-4 flex flex-col gap-2 pl-6 list-decimal">
+              <li><a href="/app/panelAreasR" class="text-CFE-800 font-bold hover:text-CFE-900">Recursos humanos</a></li>
+              <li><a href="/app/panelAreasV" class="text-CFE-800 font-bold hover:text-CFE-900">Ventas</a></li>
+              <li><a href="/app/panelAreasC" class="text-CFE-800 font-bold hover:text-CFE-900">Departamento de cómputo</a></li>
+            </ol>
+          </div>
+
+          <!-- GRÁFICA -->
+          <div class="bg-slate-300 rounded-xl p-4 shadow-md">
+            <h2 class="text-center text-2xl font-semibold mb-3">Histórico</h2>
+
+            <div class="w-full h-[280px] sm:h-[320px] lg:h-[300px] rounded-xl p-2">
+              <Barras client:load />
+            </div>
+          </div>
+
+        </div>
+
+        <!-- DERECHA -->
+        <div class="bg-slate-300 rounded-xl p-4 shadow-md flex flex-col h-full min-h-[85vh]">
+
+          <!-- ESPACIO ARRIBA -->
+          <div class="mt-6"></div>
+
+          <h3 class="text-center text-xl sm:text-2xl font-bold mb-6">
+            Por un consumo de energía más amigable para todos.
+          </h3>
+
+          <ul class="flex flex-col gap-3 text-sm sm:text-base mb-6 text-center">
+            <li>Semana pasada: <span class="font-bold text-CFE-900">{promedioData} Kwh</span></li>
+            <li>Semana actual: <span class="font-bold text-CFE-900">{promedioDataTwo} Kwh</span></li>
+          </ul>
+
+          <p class="text-center text-sm sm:text-base mb-6 text-slate-700 px-4">
+            Descubre recomendaciones inteligentes de ahorro energético junto a nuestro asistente LowerG, quien te ayudará a optimizar tu consumo y tomar decisiones más eficientes para reducir costos y cuidar el medio ambiente.
+          </p>
+
+          <div class="flex-grow lg:flex-grow-0"></div>
+
+          <!-- MASCOTA -->
+          <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mt-4 lg:mt-32 mb-6">
+
+            <Mascota client:load>
+              <div class="flex items-center justify-center 
+                          w-36 h-36 sm:w-44 sm:h-44 lg:w-52 lg:h-52 
+                          bg-slate-200 rounded-full p-3 text-center shadow-md">
+                
+                <p class="text-[11px] sm:text-sm leading-tight break-words">
+                  {promedioData > promedioDataTwo
+                    ? positive + " Ahorraste el " + (Math.round(resultado) * -1) + "%"
+                    : negative + " Gastaste un " + Math.round(resultado) + "% más de tu consumo habitual."
+                  }
+                </p>
+
+              </div>
+            </Mascota>
+
+            <Mascota client:load>
+              <img
+                src={promedioData > promedioDataTwo ? Happy.src : Sad.src}
+                class="w-36 h-36 sm:w-44 sm:h-44 lg:w-52 lg:h-52 object-contain"
+              />
+            </Mascota>
+
+          </div>
+        </div>
+
+      </div>
+
+    </BaseL>
+  </main>
 </Layout>

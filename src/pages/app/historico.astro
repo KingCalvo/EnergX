@@ -3,6 +3,7 @@ import Layout from '../../layouts/Layout.astro';
 import BaseL from '../../layouts/BaseLayout.astro';
 import Barras from '../../components/app/animations/Barras';
 ---
+
 <script>
   fetch(`${import.meta.env.PUBLIC_API_URL}/api/me`, {
     credentials: "include",
@@ -18,14 +19,21 @@ import Barras from '../../components/app/animations/Barras';
 </script>
 
 <Layout title="LowerG">
-    <main class="h-screen w-screen overflow-hidden">
-        <BaseL>
-            <section class="w-full max-w-6xl bg-white border border-gray-300 rounded-lg shadow-lg p-8 ml-11 mt-32">
-              <h1 class="text-2xl font-bold text-center mb-6">Comparativa de consumo por áreas</h1>
-              <div class="w-full">
-                <Barras client:load />
-              </div>
-            </section>
-        </BaseL>
-    </main>
+  <main class="min-h-screen w-full overflow-x-hidden">
+    <BaseL>
+      <section class="mx-auto w-full max-w-5xl px-4 py-6 sm:px-6 lg:px-8">
+        <div class="rounded-2xl border border-gray-300 bg-white p-4 shadow-lg sm:p-6 lg:p-8">
+          <h1 class="mb-6 text-center text-2xl font-bold sm:text-3xl">
+            Comparativa de consumo por áreas
+          </h1>
+
+          <div class="mx-auto w-full max-w-[900px]">
+            <div class="h-[280px] sm:h-[340px] lg:h-[420px]">
+              <Barras client:load />
+            </div>
+          </div>
+        </div>
+      </section>
+    </BaseL>
+  </main>
 </Layout>

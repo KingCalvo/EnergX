@@ -14,6 +14,7 @@ const otherSetting = {
   ],
   grid: { horizontal: true },
   sx: {
+    backgroundColor: "transparent",
     [`& .${axisClasses.left} .${axisClasses.label}`]: {
       transform: "translateX(-10px)",
     },
@@ -21,13 +22,13 @@ const otherSetting = {
 };
 
 const dataset = [
-  { value: 1, month: "IT", color: "#FF5733" }, // IT
-  { value: 2, month: "Marketing", color: "#33FF57" }, // Marketing
-  { value: 3, month: "Operaciones", color: "#3357FF" }, // Operaciones
-  { value: 4, month: "Recursos Humanos", color: "#FF33A8" }, // Recursos Humanos
-  { value: 1, month: "Ventas", color: "#FF9F33" }, // Ventas
-  { value: 2, month: "Departamento de Cómputo", color: "#8E33FF" }, // Departamento de Cómputo
-  { value: 3, month: "Finanzas", color: "#33FFF1" }, // Finanzas
+  { value: 1, month: "IT", color: "#FF5733" },
+  { value: 2, month: "Marketing", color: "#33FF57" },
+  { value: 3, month: "Operaciones", color: "#3357FF" },
+  { value: 4, month: "Recursos H...", color: "#FF33A8" },
+  { value: 1, month: "Ventas", color: "#FF9F33" },
+  { value: 2, month: "Departamento...", color: "#8E33FF" },
+  { value: 3, month: "Finanzas", color: "#33FFF1" },
 ];
 
 export default function FormatterDemoNoSnap() {
