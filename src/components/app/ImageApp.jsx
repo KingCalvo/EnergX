@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 
-// 👇 IMPORTAR IMÁGENES (IMPORTANTE)
 import img1 from "../../assets/Energ-X-Login.png";
 import img2 from "../../assets/Energ-X-Panel.png";
 import img3 from "../../assets/Energ-X-Dispositivo.png";
