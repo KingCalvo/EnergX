@@ -35,7 +35,6 @@ export default function ImageApp() {
 
   return (
     <>
-      {/* NORMAL */}
       <div className="relative rounded-3xl overflow-hidden border bg-white shadow">
         <button
           onClick={() => setOpen(true)}
