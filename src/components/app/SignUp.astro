@@ -3,54 +3,59 @@ import { Image } from "astro:assets";
 import ImageFondo from "../../assets/logoCompleto.png";
 ---
 
-<section class="w-5/6 h-5/6 bg-white grid grid-cols-3 grid-rows-1 rounded-xl shadow-2xl shadow-black">
-  <figure class="col-span-2 flex justify-center items-center bg-CFE-800 rounded-l-xl">
-    <Image
-      src={ImageFondo}
-      alt="Logo EnergX"
-      class="max-w-[80%] max-h-[80%] object-contain"
-    />
-  </figure>
+<section class="min-h-screen w-full bg-CFE-900 px-4 py-6 sm:px-6 lg:px-8 flex items-center justify-center">
+  <div class="w-full max-w-7xl lg:max-w-[1100px] xl:max-w-[1300px] min-h-[650px] lg:min-h-[750px] overflow-hidden rounded-xl bg-white shadow-2xl shadow-black grid grid-cols-1 lg:grid-cols-3">
+    
+    <figure class="flex items-center justify-center bg-CFE-800 p-8 sm:p-10 lg:col-span-2 lg:rounded-l-xl">
+      <Image
+        src={ImageFondo}
+        alt="Logo EnergX"
+        class="max-h-[240px] w-auto max-w-[80%] object-contain sm:max-h-[320px] lg:max-h-[80%]"
+      />
+    </figure>
 
-  <form action="" method="post" class="rounded-xl col-span-1 flex items-center justify-center">
-    <div class="w-4/5 h-auto flex flex-col justify-center items-center gap-3">
-      <h2 class="text-5xl font-bold text-center">
-        ENERG-<span class="text-CFE-700">X</span>
-      </h2>
+    <form action="" method="post" class="flex items-center justify-center p-6 sm:p-8 lg:col-span-1 lg:p-0">
+      <div class="flex w-full max-w-md flex-col items-center justify-center gap-4 sm:gap-5 lg:h-5/6 lg:w-4/5">
+        <h2 class="text-4xl font-bold flex items-center justify-center sm:text-5xl lg:text-6xl">
+          ENERG-<span class="text-CFE-700">X</span>
+        </h2>
 
-      <h3 class="text-2xl font-semibold text-center">
-        Crear cuenta
-      </h3>
+        <h3 class="text-xl font-semibold text-center sm:text-2xl">
+          Crear cuenta
+        </h3>
 
-      <input required type="text" id="nombre" placeholder="Nombre" maxlength="30" class="w-full bg-transparent border-b-2 focus:outline-none" />
-      <input required type="text" id="apellidoP" placeholder="Apellido Paterno" maxlength="30" class="w-full bg-transparent border-b-2 focus:outline-none" />
-      <input required type="text" id="apellidoM" placeholder="Apellido Materno" maxlength="30" class="w-full bg-transparent border-b-2 focus:outline-none" />
+        <div class="w-full grid grid-cols-1 gap-4 lg:grid-cols-2">
 
-      <input required type="number" id="edad" placeholder="Edad" min="13" max="99" class="w-full bg-transparent border-b-2 focus:outline-none" />
+          <input type="text" id="nombre" placeholder="Nombre" class="input" />
+          <input type="text" id="apellidoP" placeholder="Apellido Paterno" class="input" />
 
-      <input required type="text" id="pais" placeholder="País" maxlength="50" class="w-full bg-transparent border-b-2 focus:outline-none" />
+          <input type="text" id="apellidoM" placeholder="Apellido Materno" class="input" />
+          <input type="number" id="edad" placeholder="Edad" class="input" />
 
-      <input required type="email" id="correo" placeholder="Correo" maxlength="50" class="w-full bg-transparent border-b-2 focus:outline-none" />
+          <input type="text" id="pais" placeholder="País" class="input" />
+          <input type="tel" id="telefono" placeholder="Teléfono" class="input" />
 
-      <input required type="tel" id="telefono" placeholder="Teléfono" maxlength="10" class="w-full bg-transparent border-b-2 focus:outline-none" />
+          <input type="email" id="correo" placeholder="Correo" class="input lg:col-span-2" />
 
-      <input required type="password" id="passw" placeholder="Contraseña" maxlength="64" class="w-full bg-transparent border-b-2 focus:outline-none" />
-      <input required type="password" id="confirmPassw" placeholder="Repetir Contraseña" maxlength="64" class="w-full bg-transparent border-b-2 focus:outline-none" />
+          <input type="password" id="passw" placeholder="Contraseña" class="input" />
+          <input type="password" id="confirmPassw" placeholder="Repetir Contraseña" class="input" />
 
-      <button
-        type="submit"
-        id="register"
-        class="w-full mt-4 rounded-lg bg-CFE-700 py-3 font-semibold text-white hover:bg-CFE-800 transition-all"
-      >
-        Registrar
-      </button>
+        </div>
 
-      <p class="font-bold text-sm flex justify-center items-center gap-2 mt-2">
-        ¿Ya tienes una cuenta?
-        <a href="/app/indexApp" class="text-CFE-700 hover:underline">LOGIN</a>
-      </p>
-    </div>
-  </form>
+        <button
+          type="submit"
+          class="w-full rounded-lg bg-CFE-700 py-3 font-semibold text-white transition-all hover:bg-CFE-800"
+        >
+          Registrar
+        </button>
+
+        <p class="text-sm font-bold sm:text-base text-center">
+          ¿Ya tienes una cuenta?
+          <a href="/app/indexApp" class="text-CFE-700 hover:underline">LOGIN</a>
+        </p>
+      </div>
+    </form>
+  </div>
 </section>
 
 <script>

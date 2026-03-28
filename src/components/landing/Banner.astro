@@ -1,11 +1,44 @@
-<header class="flex justify-center p-4 border-b border-black bg-CFE-800 shadow-md">
-    <nav class="flex gap-8 font-bold ">
-      <a href="/" class="hover:text-white transition-colors duration-200 ease-in-out transform hover:scale-105">HOME</a>
-<!--       <a href="/landing/oferta" class="hover:text-white transition-colors duration-200 ease-in-out transform hover:scale-105">OFFER</a> -->
-      <a href="/app/indexApp" class="hover:text-white transition-colors duration-200 ease-in-out transform hover:scale-105">WEBAPP</a>
-      <a href="/landing/products" class="hover:text-white transition-colors duration-200 ease-in-out transform hover:scale-105">PRODUCT DEVICES</a>
-      <a href="/landing/about" class="hover:text-white transition-colors duration-200 ease-in-out transform hover:scale-105">ABOUT US</a>
-    </nav>
+
+---
+---
+
+<header id="banner" class="w-full flex justify-center transition-all duration-300">
+  <nav id="navContainer"
+    class="flex gap-2 px-3 py-2 mt-4 rounded-full border border-slate-200 bg-CFE-800 shadow-md backdrop-blur-md transition-all duration-300">
+    
+    <a href="/" class="nav-item">HOME</a>
+    <a href="/landing/oferta" class="nav-item">OFFER</a>
+    <a href="/app/indexApp" class="nav-item">WEBAPP</a>
+    <a href="/landing/products" class="nav-item">PRODUCT DEVICES</a>
+    <a href="/landing/about" class="nav-item">ABOUT US</a>
+
+  </nav>
 </header>
 
-  
+<script>
+const banner = document.getElementById("banner");
+
+if (banner) {
+  window.addEventListener("scroll", () => {
+    if (window.scrollY > 50) {
+      banner.classList.add("fixed", "top-6", "left-0", "right-0", "z-50");
+    } else {
+      banner.classList.remove("fixed", "top-6", "left-0", "right-0", "z-50");
+    }
+  });
+}
+</script>
+
+<style>
+  .nav-item {
+    @apply inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium text-white transition-all duration-300;
+  }
+
+  .nav-item:hover {
+    @apply bg-slate-100 text-slate-900 scale-105;
+  }
+
+  .nav-item.active {
+    @apply bg-slate-950 text-white shadow-md;
+  }
+</style>
