@@ -56,17 +56,17 @@ export default function UserAside() {
 
   return (
     <aside className="flex w-full flex-col items-center gap-5 rounded-3xl bg-ALI-600 p-4 text-slate-900">
-      <div className="flex h-20 w-20 items-center justify-center rounded-full bg-ALI-700 shadow-md">
+      <div className="flex h-20 w-20 items-center justify-center rounded-full shadow-md">
         <FaUserCircle className="text-7xl text-black" />
       </div>
 
-      <div className="flexw-full rounded-3xl bg-ALI-700 px-4 py-6 shadow-sm backdrop-blur-sm">
+      <div className="flexw-full rounded-3xl px-4 py-2 shadow-sm backdrop-blur-sm">
         <div className="mb-3 text-center">
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-black">
+          <h1 className="text-sm font-semibold uppercase tracking-[0.2em] text-slate-800">
             Usuario
-          </p>
+          </h1>
 
-          <h2 className="mt-2 text-base font-bold leading-tight text-slate-900 sm:text-lg">
+          <h2 className="mt-2 text-base font-bold leading-tight text-slate-800 sm:text-lg">
             {error ? error : userData.name}
           </h2>
         </div>

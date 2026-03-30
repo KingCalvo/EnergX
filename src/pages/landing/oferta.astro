@@ -4,6 +4,7 @@ import { Image } from "astro:assets";
 import checkBlue from "../../assets/checkBlue.png";
 import checkB from "../../assets/checkB.png";
 ---
+
 <BaseLayout title="Offer">
     <div class="text-center font-semibold mt-7">
         <h1 class="text-4xl mb-4">
@@ -32,7 +33,10 @@ import checkB from "../../assets/checkB.png";
                     </p>
                 </div>
             </div>
-            <a href="#" class="block w-full py-4 bg-CFE-800 mt-8 rounded-xl text-white font-medium">Elegir Plan</a>
+
+            <a href="#" id="chooseStandard" class="block w-full py-4 bg-CFE-800 mt-8 rounded-xl text-white font-medium">
+                Elegir Plan
+            </a>
         </div>
     
         <!-- Premium Card -->
@@ -55,14 +59,135 @@ import checkB from "../../assets/checkB.png";
                     </p>
                     <p class="font-semibold text-gray-400 text-left flex items-center">
                         <Image class="w-5 h-5 mr-2" src={checkBlue} alt="check" />
-                        <span>Acceso al resumen<span class="text-white"> en tiempo real</span>
+                        <span>Acceso al resumen<span class="text-white"> en tiempo real</span></span>
                     </p>
                 </div>
             </div>
-            <a href="#" class="block w-full py-4 bg-CFE-800 mt-8 rounded-xl text-white font-medium">Elegir Plan</a>
+
+            <a href="#" id="choosePremium" class="block w-full py-4 bg-CFE-800 mt-8 rounded-xl text-white font-medium">
+                Elegir Plan
+            </a>
+
             <div class="absolute top-4 right-4">
                 <p class="bg-CFE-800 font-semibold px-4 py-1 rounded-full uppercase text-xs">Popular</p>
             </div>
         </div>
     </div>
+
+    <!-- MODAL -->
+    <div id="planModal" class="fixed inset-0 bg-black/50 flex items-center justify-center hidden z-50 px-4">
+        <div class="bg-white rounded-xl shadow-2xl p-6 max-w-sm w-full text-center animate-fadeIn border border-gray-200">
+            <h2 id="modalTitle" class="text-xl font-bold mb-3 text-teal-700">
+                Título
+            </h2>
+
+            <p id="modalMessage" class="text-slate-600 mb-5">
+                Mensaje
+            </p>
+
+            <button
+                id="closeModal"
+                class="bg-CFE-800 text-white px-6 py-2 rounded-lg hover:bg-CFE-900 transition-all"
+            >
+                Entendido
+            </button>
+        </div>
+    </div>
 </BaseLayout>
+
+<style>
+    @keyframes fadeIn {
+        from { opacity: 0; transform: scale(0.9); }
+        to { opacity: 1; transform: scale(1); }
+    }
+
+    .animate-fadeIn {
+        animation: fadeIn 0.25s ease;
+    }
+</style>
+
+<script>
+    const chooseStandard = document.getElementById("chooseStandard") as HTMLAnchorElement | null;
+    const choosePremium = document.getElementById("choosePremium") as HTMLAnchorElement | null;
+
+    const modal = document.getElementById("planModal") as HTMLDivElement | null;
+    const modalTitle = document.getElementById("modalTitle") as HTMLHeadingElement | null;
+    const modalMessage = document.getElementById("modalMessage") as HTMLParagraphElement | null;
+    const closeModal = document.getElementById("closeModal") as HTMLButtonElement | null;
+
+    let autoCloseTimer: ReturnType<typeof setTimeout> | null = null;
+    let redirectTimer: ReturnType<typeof setTimeout> | null = null;
+
+    function showModal(title: string, message: string, colorClass: string, autoCloseTime: number, redirectToLogin: boolean = false) {
+        if (!modal || !modalTitle || !modalMessage) return;
+
+        modalTitle.className = `text-xl font-bold mb-3 ${colorClass}`;
+        modalTitle.textContent = title;
+        modalMessage.textContent = message;
+
+        modal.classList.remove("hidden");
+
+        if (autoCloseTimer) clearTimeout(autoCloseTimer);
+        if (redirectTimer) clearTimeout(redirectTimer);
+
+        autoCloseTimer = setTimeout(() => {
+            modal.classList.add("hidden");
+
+            if (redirectToLogin) {
+                window.location.href = "/app/indexApp";
+            }
+        }, autoCloseTime);
+    }
+
+    function hideModal() {
+        if (!modal) return;
+
+        modal.classList.add("hidden");
+
+        if (autoCloseTimer) {
+            clearTimeout(autoCloseTimer);
+            autoCloseTimer = null;
+        }
+
+        if (redirectTimer) {
+            clearTimeout(redirectTimer);
+            redirectTimer = null;
+        }
+
+        if (modalTitle?.textContent === "Perfecto") {
+            window.location.href = "/app/indexApp";
+        }
+    }
+
+    chooseStandard?.addEventListener("click", (e) => {
+        e.preventDefault();
+
+        showModal(
+            "Perfecto",
+            "Puedes disfrutar del plan estándar en nuestra WebApp.",
+            "text-CFE-800",
+            5000,
+            true
+        );
+    });
+
+    choosePremium?.addEventListener("click", (e) => {
+        e.preventDefault();
+
+        showModal(
+            "Lo sentimos",
+            "El plan Premium todavía no está disponible.",
+            "text-red-600",
+            3000,
+            false
+        );
+    });
+
+    closeModal?.addEventListener("click", hideModal);
+
+    modal?.addEventListener("click", (e) => {
+        if (e.target === modal) {
+            hideModal();
+        }
+    });
+</script>

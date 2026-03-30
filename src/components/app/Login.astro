@@ -1,22 +1,22 @@
 ---
 import { Image } from "astro:assets";
-import ImageFondo from "../../assets/logoCompleto.png";
+import ImageFondo from "../../assets/logoFoco.png";
 ---
 
-<section class="min-h-screen w-full bg-ALI-900 px-4 py-6 sm:px-6 lg:px-8 flex items-center justify-center">
-  <div class="w-full max-w-7xl lg:max-w-[1100px] xl:max-w-[1300px] min-h-[650px] lg:min-h-[750px] overflow-hidden rounded-xl bg-white shadow-2xl shadow-black grid grid-cols-1 lg:grid-cols-3">
+<section class="w-full min-h-screen bg-ALI-900 px-4 py-10 sm:px-6 lg:px-8 flex justify-center items-start lg:items-center">
+  <div class="w-full max-w-7xl lg:max-w-[1100px] xl:max-w-[1300px] lg:h-[600px] overflow-hidden rounded-xl bg-white shadow-2xl shadow-black grid grid-cols-1 lg:grid-cols-3">
     
-    <figure class="flex items-center justify-center bg-ALI-800 p-8 sm:p-10 lg:col-span-2 lg:rounded-l-xl">
+    <figure class="flex items-center justify-center bg-ALI-800 p-8 sm:p-10 lg:col-span-2 lg:rounded-l-xl min-h-[240px] sm:min-h-[280px] lg:h-full">
       <Image
         src={ImageFondo}
         alt="Logo EnergX"
-        class="max-h-[240px] w-auto max-w-[80%] object-contain sm:max-h-[320px] lg:max-h-[80%]"
+        class="max-h-[110px] sm:max-h-[140px] w-auto max-w-[75%] object-contain lg:max-h-[70%]"
       />
     </figure>
 
-    <form action="" method="post" class="flex items-center justify-center p-6 sm:p-8 lg:col-span-1 lg:p-0">
-      <div class="flex w-full max-w-md flex-col items-center justify-center gap-6 sm:gap-8 lg:h-4/5 lg:w-4/5">
-        <h2 class="text-4xl font-bold flex items-center justify-center sm:text-5xl lg:text-7xl">
+    <form id="loginForm" method="post" class="flex items-center justify-center p-6 sm:p-8 lg:col-span-1 lg:h-full">
+      <div class="flex w-full max-w-md flex-col items-center justify-center gap-5 sm:gap-6">
+        <h2 class="text-4xl sm:text-5xl lg:text-7xl font-bold flex items-center justify-center text-center leading-none">
           ENERG-<span class="text-ALI-800">X</span>
         </h2>
 
@@ -65,11 +65,71 @@ import ImageFondo from "../../assets/logoCompleto.png";
   </div>
 </section>
 
-<script>
-  const form = document.querySelector("form");
+<!-- MODAL DE ERROR -->
+<div id="modalError" class="fixed inset-0 bg-black/50 flex items-center justify-center hidden z-50 px-4">
+  <div class="bg-white rounded-xl shadow-2xl p-6 max-w-sm w-full text-center animate-fadeIn border border-gray-200">
+    <h2 class="text-xl font-bold mb-3 text-red-600">
+      Correo o contraseña incorrectos
+    </h2>
 
+    <p class="text-slate-600 mb-5">
+      Verifica tus credenciales e inténtalo nuevamente.
+    </p>
+
+    <button
+      id="closeModalError"
+      class="bg-red-600 text-white px-6 py-2 rounded-lg hover:bg-red-700 transition-all"
+    >
+      Entendido
+    </button>
+  </div>
+</div>
+
+<style>
+  @keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
+  }
+
+  .animate-fadeIn {
+    animation: fadeIn 0.25s ease;
+  }
+</style>
+
+<script>
+  const form = document.getElementById("loginForm") as HTMLFormElement | null;
   const email = document.getElementById("emailLogin") as HTMLInputElement | null;
   const password = document.getElementById("password") as HTMLInputElement | null;
+
+  const modalError = document.getElementById("modalError") as HTMLDivElement | null;
+  const closeModalError = document.getElementById("closeModalError") as HTMLButtonElement | null;
+
+  let autoCloseTimer: ReturnType<typeof setTimeout> | null = null;
+
+  function showModalError() {
+    if (!modalError) return;
+
+    modalError.classList.remove("hidden");
+
+    if (autoCloseTimer) {
+      clearTimeout(autoCloseTimer);
+    }
+
+    autoCloseTimer = setTimeout(() => {
+      modalError.classList.add("hidden");
+    }, 3000);
+  }
+
+  function hideModalError() {
+    if (!modalError) return;
+
+    modalError.classList.add("hidden");
+
+    if (autoCloseTimer) {
+      clearTimeout(autoCloseTimer);
+      autoCloseTimer = null;
+    }
+  }
 
   form?.addEventListener("submit", async (event) => {
     event.preventDefault();
@@ -89,10 +149,10 @@ import ImageFondo from "../../assets/logoCompleto.png";
         }),
       });
 
-      const result = await response.json().catch(() => null);
+      await response.json().catch(() => null);
 
       if (!response.ok) {
-        alert(result?.message || "Error al iniciar sesión");
+        showModalError();
         return;
       }
 
@@ -101,14 +161,22 @@ import ImageFondo from "../../assets/logoCompleto.png";
       });
 
       if (!meResponse.ok) {
-        alert("La sesión no se pudo confirmar");
+        showModalError();
         return;
       }
 
       window.location.replace("/app/panelAdm");
     } catch (error) {
       console.error("Error en login:", error);
-      alert("No se pudo iniciar sesión");
+      showModalError();
+    }
+  });
+
+  closeModalError?.addEventListener("click", hideModalError);
+
+  modalError?.addEventListener("click", (e) => {
+    if (e.target === modalError) {
+      hideModalError();
     }
   });
 </script>

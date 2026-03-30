@@ -1,65 +1,151 @@
 ---
 import { Image } from "astro:assets";
-import ImageFondo from "../../assets/logoCompleto.png";
+import ImageFondo from "../../assets/logoFoco.png";
 ---
 
-<section class="min-h-screen w-full bg-ALI-900 px-4 py-6 sm:px-6 lg:px-8 flex items-center justify-center">
-  <div class="w-full max-w-7xl lg:max-w-[1100px] xl:max-w-[1300px] min-h-[650px] lg:min-h-[750px] overflow-hidden rounded-xl bg-white shadow-2xl shadow-black grid grid-cols-1 lg:grid-cols-3">
-    
-    <figure class="flex items-center justify-center bg-ALI-800 p-8 sm:p-10 lg:col-span-2 lg:rounded-l-xl">
+<section class="w-full min-h-screen bg-ALI-900 px-4 py-10 sm:px-6 lg:px-8 flex justify-center items-start lg:items-center">
+  <div class="w-full max-w-7xl lg:max-w-[1100px] xl:max-w-[1300px] lg:h-[600px] overflow-hidden rounded-xl bg-white shadow-2xl shadow-black grid grid-cols-1 lg:grid-cols-3">
+
+    <figure class="flex items-center justify-center bg-ALI-800 p-8 sm:p-10 lg:col-span-2 lg:rounded-l-xl min-h-[240px] sm:min-h-[280px] lg:h-full">
       <Image
         src={ImageFondo}
         alt="Logo EnergX"
-        class="max-h-[240px] w-auto max-w-[80%] object-contain sm:max-h-[320px] lg:max-h-[80%]"
+        class="max-h-[110px] sm:max-h-[140px] w-auto max-w-[75%] object-contain lg:max-h-[70%]"
       />
     </figure>
 
-    <form action="" method="post" class="flex items-center justify-center p-6 sm:p-8 lg:col-span-1 lg:p-0">
-      <div class="flex w-full max-w-md flex-col items-center justify-center gap-4 sm:gap-5 lg:h-5/6 lg:w-4/5">
-        <h2 class="text-4xl font-bold flex items-center justify-center sm:text-5xl lg:text-6xl">
+    <form id="signupForm" method="post" class="flex items-center justify-center p-6 sm:p-8 lg:col-span-1 lg:h-full">
+      <div class="flex w-full max-w-md flex-col items-center justify-center gap-4 sm:gap-5">
+
+        <h2 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-center">
           ENERG-<span class="text-ALI-800">X</span>
         </h2>
 
-        <h3 class="text-xl font-semibold text-center sm:text-2xl">
+        <h3 class="text-xl sm:text-2xl font-semibold text-center text-gray-800">
           Crear cuenta
         </h3>
 
-        <div class="w-full grid grid-cols-1 gap-4 lg:grid-cols-2">
+        <div class="w-full grid grid-cols-1 sm:grid-cols-2 gap-4">
 
-          <input type="text" id="nombre" placeholder="Nombre" class="input" />
-          <input type="text" id="apellidoP" placeholder="Apellido Paterno" class="input" />
+          <input required type="text" id="nombre" placeholder="Nombre"
+            class="input"
+            pattern="^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ\s]+$"
+            title="Solo letras"
+          />
 
-          <input type="text" id="apellidoM" placeholder="Apellido Materno" class="input" />
-          <input type="number" id="edad" placeholder="Edad" class="input" />
+          <input required type="text" id="apellidoP" placeholder="Apellido Paterno"
+            class="input"
+            pattern="^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ\s]+$"
+            title="Solo letras"
+          />
 
-          <input type="text" id="pais" placeholder="País" class="input" />
-          <input type="tel" id="telefono" placeholder="Teléfono" class="input" />
+          <input required type="text" id="apellidoM" placeholder="Apellido Materno"
+            class="input"
+            pattern="^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ\s]+$"
+            title="Solo letras"
+          />
 
-          <input type="email" id="correo" placeholder="Correo" class="input lg:col-span-2" />
+          <input required type="text" id="edad" placeholder="Edad"
+            class="input"
+            inputmode="numeric"
+            pattern="^(1[6-9]|[2-9][0-9]|100)$"
+            maxlength="3"
+            title="La edad debe ser entre 16 y 100 años"
+          />
 
-          <input type="password" id="passw" placeholder="Contraseña" class="input" />
-          <input type="password" id="confirmPassw" placeholder="Repetir Contraseña" class="input" />
+          <input required type="text" id="pais" placeholder="País"
+            class="input"
+            pattern="^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ\s]+$"
+            title="Solo letras"
+          />
+
+          <input required type="text" id="telefono" placeholder="Teléfono"
+            class="input"
+            inputmode="numeric"
+            pattern="^[0-9]{10}$"
+            maxlength="10"
+            title="10 dígitos"
+          />
+
+          <input required type="email" id="correo" placeholder="Correo"
+            class="input sm:col-span-2"
+          />
+
+          <input required type="password" id="passw" placeholder="Contraseña"
+            class="input"
+            minlength="6"
+          />
+
+          <input required type="password" id="confirmPassw" placeholder="Repetir Contraseña"
+            class="input"
+            minlength="6"
+          />
 
         </div>
 
         <button
           type="submit"
-          class="w-full rounded-lg bg-ALI-800 py-3 font-semibold text-white transition-all hover:bg-CFE-800"
+          class="w-full rounded-lg bg-ALI-800 py-3 font-semibold text-white transition-all hover:bg-ALI-900"
         >
           Registrar
         </button>
 
-        <p class="text-sm font-bold sm:text-base text-center">
+        <p class="text-sm sm:text-base font-bold text-center">
           ¿Ya tienes una cuenta?
           <a href="/app/indexApp" class="text-ALI-800 hover:underline">LOGIN</a>
         </p>
+
       </div>
     </form>
   </div>
 </section>
 
+<!-- MODAL -->
+<div id="modalError" class="fixed inset-0 bg-black/50 flex items-center justify-center hidden z-50 px-4">
+  <div class="bg-white rounded-xl shadow-2xl p-6 max-w-sm w-full text-center animate-fadeIn border border-gray-200">
+    <h2 class="text-xl font-bold mb-3 text-red-600">
+      No se pudo registrar
+    </h2>
+
+    <p class="text-slate-600 mb-5">
+      Verifica los datos e inténtalo nuevamente.
+    </p>
+
+    <button
+      id="closeModalError"
+      class="bg-red-600 text-white px-6 py-2 rounded-lg hover:bg-red-700 transition-all"
+    >
+      Entendido
+    </button>
+  </div>
+</div>
+
+<style>
+  .input {
+    @apply w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-base text-gray-800 outline-none transition-all placeholder:text-gray-400 focus:border-ALI-800 focus:ring-2 focus:ring-ALI-800/20;
+  }
+
+  .input:focus:invalid {
+    border-color: #dc2626;
+    box-shadow: 0 0 0 2px rgba(220,38,38,0.2);
+  }
+
+  .input:not(:placeholder-shown):invalid {
+    border-color: #dc2626;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
+  }
+
+  .animate-fadeIn {
+    animation: fadeIn 0.25s ease;
+  }
+</style>
+
 <script>
-  const form = document.querySelector("form");
+  const form = document.getElementById("signupForm") as HTMLFormElement | null;
 
   const nombre = document.getElementById("nombre") as HTMLInputElement | null;
   const apellidoP = document.getElementById("apellidoP") as HTMLInputElement | null;
@@ -71,10 +157,52 @@ import ImageFondo from "../../assets/logoCompleto.png";
   const password = document.getElementById("passw") as HTMLInputElement | null;
   const confirmPassw = document.getElementById("confirmPassw") as HTMLInputElement | null;
 
+  const modalError = document.getElementById("modalError") as HTMLDivElement | null;
+  const closeModalError = document.getElementById("closeModalError") as HTMLButtonElement | null;
+
+  let autoCloseTimer: ReturnType<typeof setTimeout> | null = null;
+
+  function showModalError() {
+    if (!modalError) return;
+
+    modalError.classList.remove("hidden");
+
+    if (autoCloseTimer) clearTimeout(autoCloseTimer);
+
+    autoCloseTimer = setTimeout(() => {
+      modalError.classList.add("hidden");
+    }, 3000);
+  }
+
+  function hideModalError() {
+    if (!modalError) return;
+
+    modalError.classList.add("hidden");
+
+    if (autoCloseTimer) {
+      clearTimeout(autoCloseTimer);
+      autoCloseTimer = null;
+    }
+  }
+
+  function validatePasswords() {
+    if (!password || !confirmPassw) return;
+
+    if (confirmPassw.value && password.value !== confirmPassw.value) {
+      confirmPassw.setCustomValidity("Las contraseñas no coinciden");
+    } else {
+      confirmPassw.setCustomValidity("");
+    }
+  }
+
+  password?.addEventListener("input", validatePasswords);
+  confirmPassw?.addEventListener("input", validatePasswords);
+
   form?.addEventListener("submit", async (event) => {
     event.preventDefault();
 
     if (
+      !form ||
       !nombre ||
       !apellidoP ||
       !apellidoM ||
@@ -85,12 +213,14 @@ import ImageFondo from "../../assets/logoCompleto.png";
       !password ||
       !confirmPassw
     ) {
-      alert("No se encontraron todos los campos del formulario.");
+      showModalError();
       return;
     }
 
-    if (password.value !== confirmPassw.value) {
-      alert("Las contraseñas no coinciden");
+    validatePasswords();
+
+    if (!form.checkValidity()) {
+      form.reportValidity();
       return;
     }
 
@@ -112,10 +242,8 @@ import ImageFondo from "../../assets/logoCompleto.png";
         }),
       });
 
-      const registerData = await registerResponse.json().catch(() => null);
-
       if (!registerResponse.ok) {
-        alert(registerData?.message || "No se pudo registrar el usuario");
+        showModalError();
         return;
       }
 
@@ -131,10 +259,8 @@ import ImageFondo from "../../assets/logoCompleto.png";
         }),
       });
 
-      const loginData = await loginResponse.json().catch(() => null);
-
       if (!loginResponse.ok) {
-        alert(loginData?.message || "Usuario creado, pero no se pudo iniciar sesión");
+        showModalError();
         window.location.replace("/app/indexApp");
         return;
       }
@@ -144,15 +270,24 @@ import ImageFondo from "../../assets/logoCompleto.png";
       });
 
       if (!meResponse.ok) {
-        alert("Usuario creado, pero la sesión no se pudo confirmar");
+        showModalError();
         window.location.replace("/app/indexApp");
         return;
       }
 
       window.location.replace("/app/panelAdm");
+
     } catch (error) {
       console.error("Error en registro:", error);
-      alert("Ocurrió un error al registrar el usuario");
+      showModalError();
+    }
+  });
+
+  closeModalError?.addEventListener("click", hideModalError);
+
+  modalError?.addEventListener("click", (e) => {
+    if (e.target === modalError) {
+      hideModalError();
     }
   });
 </script>
