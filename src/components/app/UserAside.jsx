@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { FaUserCircle } from "react-icons/fa";
+import { FaEnvelope, FaPhone, FaUserCircle } from "react-icons/fa";
 
 export default function UserAside() {
   const [userData, setUserData] = useState({
@@ -42,7 +42,7 @@ export default function UserAside() {
           phone: user.telefono || "Teléfono no disponible",
         });
       } catch (err) {
-        if (err.name !== "AbortError") {
+        if (err?.name !== "AbortError") {
           console.error("Error al obtener el usuario:", err);
           setError("No se pudo cargar el usuario");
         }
@@ -55,21 +55,34 @@ export default function UserAside() {
   }, []);
 
   return (
-    <aside className="bg-CFE-600 p-4 w-64 flex flex-col items-center gap-4">
-      <div className="w-20 h-20 flex justify-center items-center mt-3">
-        <FaUserCircle className="text-9xl" />
+    <aside className="flex w-full flex-col items-center gap-5 rounded-3xl bg-ALI-600 p-4 text-slate-900">
+      <div className="flex h-20 w-20 items-center justify-center rounded-full bg-ALI-700 shadow-md">
+        <FaUserCircle className="text-7xl text-black" />
       </div>
 
-      <article className="flex flex-col items-center gap-8 text-center mt-2">
-        <h2 className="text-black mt-2 text-xl font-bold">
-          {error ? error : userData.name}
-        </h2>
+      <div className="flexw-full rounded-3xl bg-ALI-700 px-4 py-6 shadow-sm backdrop-blur-sm">
+        <div className="mb-3 text-center">
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-black">
+            Usuario
+          </p>
 
-        <ul className="text-slate-700 flex flex-col items-center gap-2 text-xl">
-          <li className="mt-2">{userData.email}</li>
-          <li className="mt-2">{userData.phone}</li>
+          <h2 className="mt-2 text-base font-bold leading-tight text-slate-900 sm:text-lg">
+            {error ? error : userData.name}
+          </h2>
+        </div>
+
+        <ul className="space-y-3 text-sm text-slate-700">
+          <li className="flex items-center gap-2 rounded-xl bg-slate-100 px-3 py-2">
+            <FaEnvelope className="shrink-0 text-slate-500" />
+            <span className="min-w-0 truncate">{userData.email}</span>
+          </li>
+
+          <li className="flex items-center gap-2 rounded-xl bg-slate-100 px-3 py-2">
+            <FaPhone className="shrink-0 text-slate-500" />
+            <span className="min-w-0 truncate">{userData.phone}</span>
+          </li>
         </ul>
-      </article>
+      </div>
     </aside>
   );
 }

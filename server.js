@@ -286,6 +286,157 @@ app.post("/api/logout", async (req, res) => {
   }
 });
 
+app.post("/api/addDispositivo", requireAuth, async (req, res) => {
+  try {
+    const { id_dispositivo, nombre_area, metros, tipo_consumo, edificio } =
+      req.body;
+
+    if (
+      id_dispositivo === undefined ||
+      !nombre_area ||
+      metros === undefined ||
+      !tipo_consumo ||
+      !edificio
+    ) {
+      return res.status(400).json({
+        success: false,
+        message: "Faltan campos obligatorios",
+      });
+    }
+
+    const idParsed = Number(id_dispositivo);
+    const metrosParsed = Number(metros);
+
+    if (!Number.isInteger(idParsed) || idParsed <= 0) {
+      return res.status(400).json({
+        success: false,
+        message: "El ID del dispositivo debe ser un número entero válido",
+      });
+    }
+
+    if (!Number.isInteger(metrosParsed) || metrosParsed <= 0) {
+      return res.status(400).json({
+        success: false,
+        message: "Los metros deben ser un número entero válido",
+      });
+    }
+
+    if (!["monofa", "trifa"].includes(tipo_consumo)) {
+      return res.status(400).json({
+        success: false,
+        message: "Tipo de consumo inválido",
+      });
+    }
+
+    const { error } = await supabaseAdmin.from("dispositivos").insert({
+      id_dispositivo: idParsed,
+      nombre_area,
+      metros: metrosParsed,
+      tipo_consumo,
+      edificio,
+    });
+
+    if (error) {
+      return res.status(400).json({
+        success: false,
+        message: error.message,
+      });
+    }
+
+    return res.status(201).json({
+      success: true,
+      message: "Dispositivo registrado correctamente",
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+});
+
+app.get("/api/areas", requireAuth, async (req, res) => {
+  try {
+    const { data, error } = await supabaseAdmin
+      .from("dispositivos")
+      .select("id_dispositivo, nombre_area")
+      .order("id_dispositivo", { ascending: false })
+      .limit(10);
+
+    if (error) {
+      return res.status(400).json({
+        success: false,
+        message: error.message,
+      });
+    }
+
+    return res.json({
+      success: true,
+      areas: data,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+});
+
+app.get("/api/edificios", requireAuth, async (req, res) => {
+  try {
+    const { data, error } = await supabaseAdmin
+      .from("dispositivos")
+      .select("id_dispositivo, edificio, nombre_area")
+      .order("id_dispositivo", { ascending: false });
+
+    if (error) {
+      return res.status(400).json({
+        success: false,
+        message: error.message,
+      });
+    }
+
+    return res.json({
+      success: true,
+      edificios: data,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+});
+
+app.get("/api/dispositivo/:id", requireAuth, async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const { data, error } = await supabaseAdmin
+      .from("dispositivos")
+      .select("id_dispositivo, nombre_area, edificio, metros")
+      .eq("id_dispositivo", id)
+      .single();
+
+    if (error || !data) {
+      return res.status(404).json({
+        success: false,
+        message: "Dispositivo no encontrado",
+      });
+    }
+
+    return res.json({
+      success: true,
+      dispositivo: data,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+});
+
 app.listen(port, () => {
   console.log(`Servidor Express corriendo en ${port}`);
 });

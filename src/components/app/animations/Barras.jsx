@@ -1,54 +1,94 @@
-import { axisClasses } from "@mui/x-charts/ChartsAxis";
+import { useEffect, useState } from "react";
 import { BarChart } from "@mui/x-charts/BarChart";
+import { axisClasses } from "@mui/x-charts/ChartsAxis";
 
-const otherSetting = {
-  height: 300,
-  yAxis: [
-    {
-      label: "Semanas",
-      scaleType: "linear",
-      min: 0,
-      max: 4,
-      ticks: [1, 2, 3, 4],
-    },
-  ],
-  grid: { horizontal: true },
-  sx: {
-    backgroundColor: "transparent",
-    [`& .${axisClasses.left} .${axisClasses.label}`]: {
-      transform: "translateX(-10px)",
-    },
-  },
-};
+export default function Barras() {
+  const [areas, setAreas] = useState([]);
+  const [error, setError] = useState(false);
+  const [limit, setLimit] = useState(9); // default desktop
 
-const dataset = [
-  { value: 1, month: "IT", color: "#FF5733" },
-  { value: 2, month: "Marketing", color: "#33FF57" },
-  { value: 3, month: "Operaciones", color: "#3357FF" },
-  { value: 4, month: "Recursos H...", color: "#FF33A8" },
-  { value: 1, month: "Ventas", color: "#FF9F33" },
-  { value: 2, month: "Departamento...", color: "#8E33FF" },
-  { value: 3, month: "Finanzas", color: "#33FFF1" },
-];
+  // detectar tamaño de pantalla
+  function getLimit() {
+    const width = window.innerWidth;
 
-export default function FormatterDemoNoSnap() {
+    if (width < 640) return 5; // celular
+    if (width < 1024) return 7; // tablet
+    return 9; // 💻 desktop
+  }
+
+  useEffect(() => {
+    // inicial
+    setLimit(getLimit());
+
+    // resize dinámico
+    const handleResize = () => {
+      setLimit(getLimit());
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  useEffect(() => {
+    fetch(`${import.meta.env.PUBLIC_API_URL}/api/areas`, {
+      credentials: "include",
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (!data.success) throw new Error();
+
+        const formatted = data.areas.map((a, i) => ({
+          value: i + 1,
+          area: a.nombre_area,
+        }));
+
+        setAreas(formatted);
+      })
+      .catch(() => {
+        setError(true);
+      });
+  }, []);
+
+  if (error) {
+    return (
+      <p className="text-center text-red-500 font-semibold">
+        No se pudieron cargar las áreas.
+      </p>
+    );
+  }
+
+  if (!areas.length) {
+    return <p className="text-center">Cargando...</p>;
+  }
+
+  // 🔥 aplicar límite dinámico
+  const visibleAreas = areas.slice(0, limit);
+
   return (
     <BarChart
-      dataset={dataset}
+      dataset={visibleAreas}
       xAxis={[
         {
           scaleType: "band",
-          dataKey: "month",
+          dataKey: "area",
         },
       ]}
       series={[
         {
           dataKey: "value",
           label: "Áreas",
-          barStyle: (entry) => ({ fill: entry.color }),
+          color: "#0F766E",
         },
       ]}
-      {...otherSetting}
+      height={300}
+      grid={{ horizontal: true }}
+      sx={{
+        backgroundColor: "transparent",
+        [`& .${axisClasses.left} .${axisClasses.label}`]: {
+          transform: "translateX(-10px)",
+        },
+      }}
     />
   );
 }

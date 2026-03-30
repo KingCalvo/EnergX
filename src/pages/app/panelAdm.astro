@@ -43,32 +43,37 @@ const resultado = ((promedioDataTwo - promedioData) / promedioData) * 100;
           <!-- TEXTO -->
           <div class="bg-slate-300 rounded-xl p-4 shadow-md">
             <p class="text-sm sm:text-base text-justify">
-              Bienvenido al panel de administración de Energ-X. Desde aquí puedes registrar nuevos dispositivos, gestionar las áreas monitoreadas y analizar el consumo energético en tiempo real. Nuestra plataforma está diseñada para brindarte control, eficiencia y una visión clara del uso de energía en tu entorno.
+              Bienvenido al panel de administración de Energ-X. Desde aquí puedes registrar nuevos dispositivos, gestionar las áreas monitoreadas y analizar el consumo energético en tiempo real.
             </p>
           </div>
 
           <!-- BOTÓN -->
           <a href="/app/formDispositivo"
-            class="flex items-center justify-center bg-CFE-800 rounded-xl text-white font-semibold h-14 sm:h-16 hover:bg-CFE-900 transition-all">
+            class="flex items-center justify-center bg-teal-700 rounded-xl text-white font-semibold h-14 sm:h-16 hover:bg-teal-900 transition-all">
             Registrar nuevo dispositivo
           </a>
 
           <!-- ÁREAS -->
-          <div class="bg-slate-300 rounded-xl p-4 shadow-md">
-            <h2 class="text-center text-2xl font-semibold">Áreas</h2>
+          <div class="bg-slate-300 rounded-xl p-4 shadow-md flex flex-col items-center">
 
-            <ol class="mt-4 flex flex-col gap-2 pl-6 list-decimal">
-              <li><a href="/app/panelAreasR" class="text-CFE-800 font-bold hover:text-CFE-900">Recursos humanos</a></li>
-              <li><a href="/app/panelAreasV" class="text-CFE-800 font-bold hover:text-CFE-900">Ventas</a></li>
-              <li><a href="/app/panelAreasC" class="text-CFE-800 font-bold hover:text-CFE-900">Departamento de cómputo</a></li>
+            <h2 class="text-2xl font-semibold mb-2">Áreas</h2>
+
+            <ol id="areasList" class="w-full mt-2 flex flex-col gap-2 pl-6 list-decimal">
+              <li class="text-gray-500">Cargando áreas...</li>
             </ol>
+
+            <a href="/app/panelEdificios"
+              class="mt-6 w-80 text-center bg-teal-700 text-white py-2 rounded-lg font-semibold hover:bg-teal-900 transition-all">
+              Ver todas
+            </a>
+
           </div>
 
           <!-- GRÁFICA -->
           <div class="bg-slate-300 rounded-xl p-4 shadow-md">
-            <h2 class="text-center text-2xl font-semibold mb-3">Histórico</h2>
+            <h2 class="text-center text-2xl font-semibold mb-3">Seguimiento semanal por área</h2>
 
-            <div class="w-full h-[280px] sm:h-[320px] lg:h-[300px] rounded-xl p-2">
+            <div class="w-full h-[260px] sm:h-[300px] lg:h-[300px] rounded-xl p-2">
               <Barras client:load />
             </div>
           </div>
@@ -76,38 +81,39 @@ const resultado = ((promedioDataTwo - promedioData) / promedioData) * 100;
         </div>
 
         <!-- DERECHA -->
-        <div class="bg-slate-300 rounded-xl p-4 shadow-md flex flex-col h-full min-h-[85vh]">
+        <div class="bg-slate-300 rounded-xl p-4 shadow-md flex flex-col 
+                    lg:min-h-[85vh]">
 
-          <!-- ESPACIO ARRIBA -->
-          <div class="mt-6"></div>
+          <div class="mt-2 lg:mt-6"></div>
 
-          <h3 class="text-center text-xl sm:text-2xl font-bold mb-6">
+          <h3 class="text-center text-xl sm:text-2xl font-bold mb-4 lg:mb-6">
             Por un consumo de energía más amigable para todos.
           </h3>
 
-          <ul class="flex flex-col gap-3 text-sm sm:text-base mb-6 text-center">
-            <li>Semana pasada: <span class="font-bold text-CFE-900">{promedioData} Kwh</span></li>
-            <li>Semana actual: <span class="font-bold text-CFE-900">{promedioDataTwo} Kwh</span></li>
+          <ul class="flex flex-col gap-2 sm:gap-3 text-sm sm:text-base mb-4 text-center">
+            <li>Semana pasada: <span class="font-bold text-teal-700">{promedioData} Kwh</span></li>
+            <li>Semana actual: <span class="font-bold text-teal-700">{promedioDataTwo} Kwh</span></li>
           </ul>
 
-          <p class="text-center text-sm sm:text-base mb-6 text-slate-700 px-4">
-            Descubre recomendaciones inteligentes de ahorro energético junto a nuestro asistente LowerG, quien te ayudará a optimizar tu consumo y tomar decisiones más eficientes para reducir costos y cuidar el medio ambiente.
+          <p class="text-center text-sm sm:text-base mb-4 text-slate-700 px-2 sm:px-4">
+            Descubre recomendaciones inteligentes de ahorro energético con LowerG.
           </p>
 
-          <div class="flex-grow lg:flex-grow-0"></div>
+          <!-- SOLO CRECE EN PC -->
+         <div class="hidden lg:block flex-grow-[0.5]"></div>
 
           <!-- MASCOTA -->
-          <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mt-4 lg:mt-32 mb-6">
+          <div class="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 mt-2 lg:mt-20 mb-2 lg:mb-6">
 
             <Mascota client:load>
               <div class="flex items-center justify-center 
-                          w-36 h-36 sm:w-44 sm:h-44 lg:w-52 lg:h-52 
-                          bg-slate-200 rounded-full p-3 text-center shadow-md">
+                          w-32 h-32 sm:w-40 sm:h-40 lg:w-52 lg:h-52 
+                          bg-slate-200 rounded-full p-2 text-center shadow-md">
                 
-                <p class="text-[11px] sm:text-sm leading-tight break-words">
+                <p class="text-[10px] sm:text-sm leading-tight break-words px-1">
                   {promedioData > promedioDataTwo
                     ? positive + " Ahorraste el " + (Math.round(resultado) * -1) + "%"
-                    : negative + " Gastaste un " + Math.round(resultado) + "% más de tu consumo habitual."
+                    : negative + " Gastaste un " + Math.round(resultado) + "% más."
                   }
                 </p>
 
@@ -117,11 +123,12 @@ const resultado = ((promedioDataTwo - promedioData) / promedioData) * 100;
             <Mascota client:load>
               <img
                 src={promedioData > promedioDataTwo ? Happy.src : Sad.src}
-                class="w-36 h-36 sm:w-44 sm:h-44 lg:w-52 lg:h-52 object-contain"
+                class="w-32 h-32 sm:w-40 sm:h-40 lg:w-52 lg:h-52 object-contain"
               />
             </Mascota>
 
           </div>
+
         </div>
 
       </div>
@@ -129,3 +136,53 @@ const resultado = ((promedioDataTwo - promedioData) / promedioData) * 100;
     </BaseL>
   </main>
 </Layout>
+<script>
+  const areasList = document.getElementById("areasList");
+
+  async function loadAreas() {
+    if (!areasList) return;
+
+    try {
+      const res = await fetch(`${import.meta.env.PUBLIC_API_URL}/api/areas`, {
+        credentials: "include",
+      });
+
+      const data = await res.json();
+
+      if (!res.ok || !data.success) throw new Error();
+
+      const areas = data.areas.slice(0, 3);
+
+      if (!areas.length) {
+        areasList.innerHTML = `<li class="text-gray-500">No hay áreas registradas.</li>`;
+        return;
+      }
+
+      let html = "";
+
+      for (let i = 0; i < areas.length; i++) {
+        const area = areas[i];
+
+        html += `
+          <li>
+            <a href="/app/panelAreas?id=${area.id_dispositivo}" 
+               class="text-teal-700 font-bold hover:text-teal-900">
+              ${area.nombre_area}
+            </a>
+          </li>
+        `;
+      }
+
+      areasList.innerHTML = html;
+
+    } catch {
+      areasList.innerHTML = `
+        <li class="text-red-500 font-semibold">
+          No se pudieron cargar las áreas.
+        </li>
+      `;
+    }
+  }
+
+  loadAreas();
+</script>

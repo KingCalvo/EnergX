@@ -1,26 +1,29 @@
 ---
 import { FaPowerOff } from 'react-icons/fa'
-import { Image } from "astro:assets";
-import ImageFondo from "../../assets/LogoTexto.png";
 import { FaArrowLeft } from "react-icons/fa";
 ---
 
-<header class="bg-CFE-800 flex justify-center items-center p-1 row-span-2 text-center">
-  <a href="#" id="back-button">
-    <FaArrowLeft className="text-5xl" />
+<header class="bg-ALI-800 flex items-center justify-between px-4 py-5">
+
+  <!-- BOTÓN BACK -->
+  <a href="#" id="back-button" class="flex items-center">
+    <FaArrowLeft className="text-2xl sm:text-4xl text-white" />
   </a>
 
-  <div class="w-full flex justify-center items-center">
-    <figure class="col-span-2 flex justify-center items-center">
-      <Image src={ImageFondo} alt="ejemplo" class="max-w-[70%] max-h-[70%] object-contain" />
-    </figure>
+  <!-- LOGO TEXTO -->
+  <div class="flex justify-center items-center">
+    <h1 class="text-2xl sm:text-4xl font-bold text-white">
+      Energ-<span class="text-ALI-600">X</span>
+    </h1>
   </div>
 
-  <div class="w-10 h-10 flex justify-center items-center cursor-pointer mr-3">
+  <!-- LOGOUT -->
+  <div class="flex items-center">
     <button type="button" id="logout-button" aria-label="Cerrar sesión">
-      <FaPowerOff className="text-5xl" />
+      <FaPowerOff className="text-2xl sm:text-4xl text-white" />
     </button>
   </div>
+
 </header>
 
 <script>

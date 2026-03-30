@@ -5,27 +5,12 @@ import MedidorE from '../../components/app/animations/MedidorEstatico';
 import LineasG from '../../components/app/animations/Lineas';
 import { TbRefresh } from "react-icons/tb";
 
+// valores base (no dependen de BD)
 const consumo_kWh = 1.93;
 const dia = 70;
 const semanaKwh = dia * 7;
-const area_m2 = 200;
 const costo_kWh = 1.2;
 const factor_emision_CO2e = 0.464;
-
-const facturacion = semanaKwh * costo_kWh;
-const indice_kWh_m2 = semanaKwh / area_m2;
-const indice_CO2e_m2 = (semanaKwh * factor_emision_CO2e) / area_m2;
-
-const datosArea = {
-  nombre: "Recursos Humanos",
-  edificio: "Edificio 1",
-  etiquetas: "Área: 200 m²",
-  consumo_kWh,
-  area_m2,
-  facturacion,
-  indice_kWh_m2,
-  indice_CO2e_m2,
-};
 ---
 
 <script>
@@ -40,19 +25,19 @@ const datosArea = {
     });
 </script>
 
-<Layout title="LowerG">
+<Layout title="Panel - Areas">
   <main class="min-h-screen w-full overflow-x-hidden">
     <BaseL>
 
       <section class="w-full px-4 py-6 flex justify-center items-start lg:items-center min-h-[85vh]">
-       <div class="w-full max-w-6xl mx-auto bg-white border border-gray-300 rounded-lg shadow-lg p-4 sm:p-6">
+        <div class="w-full max-w-6xl mx-auto bg-white border border-gray-300 rounded-lg shadow-lg p-4 sm:p-6">
 
-          <!-- HEADER -->
+          <!-- HEADER DINÁMICO -->
           <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-4">
             <div>
-              <h1 class="text-xl sm:text-2xl font-bold">{datosArea.nombre}</h1>
-              <p class="text-gray-600">{datosArea.edificio}</p>
-              <p class="text-gray-600">{datosArea.etiquetas}</p>
+              <h1 id="nombreArea" class="text-xl sm:text-2xl font-bold">Cargando...</h1>
+              <p id="edificio" class="text-gray-600"></p>
+              <p id="metros" class="text-gray-600"></p>
             </div>
 
             <select class="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-CFE-800">
@@ -64,10 +49,9 @@ const datosArea = {
 
           <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
 
-            <!-- GRÁFICA LÍNEAS -->
+            <!-- GRÁFICA -->
             <div class="bg-gray-100 border border-gray-300 rounded-lg p-3 flex flex-col items-center">
               <p class="font-bold mb-2 text-center">Evolución de la potencia</p>
-
               <div class="w-full max-w-full overflow-hidden">
                 <LineasG client:load />
               </div>
@@ -99,7 +83,7 @@ const datosArea = {
             <!-- FACTURACIÓN -->
             <div class="bg-gray-100 border border-gray-300 rounded-lg p-3 flex flex-col sm:flex-row items-center justify-center gap-2 text-center">
               <p class="font-bold">Facturación por semana:</p>
-              <span class="font-semibold">${datosArea.facturacion.toFixed(2)} MXN</span>
+              <span id="facturacion" class="font-semibold"></span>
             </div>
 
             <!-- ÍNDICES -->
@@ -109,12 +93,12 @@ const datosArea = {
               <div class="flex flex-col sm:flex-row justify-between gap-3 text-center sm:text-left">
                 <p>
                   Consumo por m²:
-                  <span class="font-semibold"> {datosArea.indice_kWh_m2.toFixed(2)} kWh/m²</span>
+                  <span id="consumoM2" class="font-semibold"></span>
                 </p>
 
                 <p>
                   Emisión de CO2e/m²:
-                  <span class="font-semibold"> {datosArea.indice_CO2e_m2.toFixed(2)} CO2e/m²</span>
+                  <span id="co2M2" class="font-semibold"></span>
                 </p>
               </div>
             </div>
@@ -127,3 +111,62 @@ const datosArea = {
     </BaseL>
   </main>
 </Layout>
+
+<script>
+  const params = new URLSearchParams(window.location.search);
+  const id = params.get("id");
+
+  const nombreEl = document.getElementById("nombreArea");
+  const edificioEl = document.getElementById("edificio");
+  const metrosEl = document.getElementById("metros");
+
+  const facturacionEl = document.getElementById("facturacion");
+  const consumoM2El = document.getElementById("consumoM2");
+  const co2M2El = document.getElementById("co2M2");
+
+  const consumo_kWh = 1.93;
+  const dia = 70;
+  const semanaKwh = dia * 7;
+  const costo_kWh = 1.2;
+  const factor_emision_CO2e = 0.464;
+
+  async function loadDispositivo() {
+    if (!id) {
+      if (nombreEl) nombreEl.textContent = "Área no disponible";
+      return;
+    }
+
+    try {
+      const res = await fetch(`${import.meta.env.PUBLIC_API_URL}/api/dispositivo/${id}`, {
+        credentials: "include",
+      });
+
+      const data = await res.json();
+
+      if (!res.ok || !data.success) throw new Error();
+
+      const d = data.dispositivo;
+
+      const area_m2 = d.metros;
+
+      const facturacion = semanaKwh * costo_kWh;
+      const consumoM2 = semanaKwh / area_m2;
+      const co2M2 = (semanaKwh * factor_emision_CO2e) / area_m2;
+
+      if (nombreEl) nombreEl.textContent = d.nombre_area;
+      if (edificioEl) edificioEl.textContent = d.edificio;
+      if (metrosEl) metrosEl.textContent = `Área: ${area_m2} m²`;
+
+      if (facturacionEl) facturacionEl.textContent = `${facturacion.toFixed(2)} MXN`;
+      if (consumoM2El) consumoM2El.textContent = `${consumoM2.toFixed(2)} kWh/m²`;
+      if (co2M2El) co2M2El.textContent = `${co2M2.toFixed(2)} CO2e/m²`;
+
+    } catch {
+      if (nombreEl) nombreEl.textContent = "Error al cargar datos";
+      if (edificioEl) edificioEl.textContent = "";
+      if (metrosEl) metrosEl.textContent = "";
+    }
+  }
+
+  loadDispositivo();
+</script>

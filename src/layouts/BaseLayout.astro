@@ -10,16 +10,16 @@ import "../styles/global.css";
   <Header />
 
   <section class="flex min-h-0 flex-1 flex-col lg:flex-row">
-    <aside class="flex w-full shrink-0 flex-row items-center gap-4 border-b border-black/10 bg-CFE-600 p-4 lg:w-72 lg:flex-col lg:border-b-0 lg:border-r">
-      <div class="w-full flex-1">
+    <aside class="flex w-full shrink-0 flex-row items-center gap-4 border-b border-black/10 bg-ALI-600 p-4 lg:w-72 lg:flex-col lg:items-stretch lg:border-b-0 lg:border-r">
+      <div class="w-full">
         <UserAside client:load />
       </div>
 
-      <figure class="w-24 sm:w-32 lg:mt-4 lg:w-full">
+      <figure class="flex w-24 shrink-0 items-center justify-center sm:w-32 lg:mt-2 lg:w-full">
         <Image
           src={ImageFondo}
           alt="Mascota EnergX"
-          class="h-auto w-full object-contain"
+          class="h-auto w-full max-w-full object-contain"
         />
       </figure>
     </aside>

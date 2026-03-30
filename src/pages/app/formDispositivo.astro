@@ -15,102 +15,104 @@ import BaseL from '../../layouts/BaseLayout.astro';
     });
 </script>
 
-<Layout title="Dispositivo">
+<Layout title="Registrar Dispositivo">
   <main class="min-h-screen w-full overflow-x-hidden">
     <BaseL>
-
       <section class="w-full min-h-[calc(100vh-80px)] flex items-center justify-center px-4 py-6">
         <div class="w-full max-w-3xl">
-
-          <!-- TEXTO SUPERIOR -->
           <div class="bg-white rounded-xl shadow-md p-6 mb-6 border border-gray-200">
             <h1 class="text-2xl sm:text-3xl font-bold mb-3 text-center">
               Registro de dispositivo Energ-X
             </h1>
 
             <p class="text-sm sm:text-base text-justify text-slate-600 text-center leading-6">
-              Ingresa la información correspondiente a tu dispositivo Energ-X para su configuración dentro del sistema.
-              Esto permitirá monitorear el consumo energético de forma precisa, optimizar el rendimiento de tus áreas
-              y mejorar la eficiencia en el uso de recursos eléctricos.
+              Completa los datos del dispositivo para integrarlo al sistema de monitoreo Energ-X. Esta información permitirá identificar el área asociada, registrar sus características y mantener una administración ordenada dentro de la plataforma.
             </p>
           </div>
 
-          <!-- FORM -->
-          <form id="dispositivoForm"
-            class="bg-white rounded-xl shadow-lg border border-gray-200 p-6 sm:p-8 flex flex-col gap-5">
-
-            <input 
-              required 
-              type="text" 
-              placeholder="ID del dispositivo" 
+          <form
+            id="dispositivoForm"
+            class="bg-white rounded-xl shadow-lg border border-gray-200 p-6 sm:p-8 flex flex-col gap-5"
+          >
+            <input
+              required
+              id="id_dispositivo"
+              name="id_dispositivo"
+              type="number"
+              min="1"
+              placeholder="ID del dispositivo"
               class="input"
             />
 
-            <input 
-              required 
-              type="text" 
-              placeholder="Nombre del área" 
+            <input
+              required
+              id="nombre_area"
+              name="nombre_area"
+              type="text"
+              placeholder="Nombre del área"
               class="input"
             />
 
-            <input 
-              required 
-              type="number" 
-              placeholder="Metros cuadrados del área" 
+            <input
+              required
+              id="metros"
+              name="metros"
+              type="number"
+              min="1"
+              placeholder="Metros cuadrados del área"
               class="input"
             />
 
-            <select class="input">
-              <option disabled selected>Tipo de consumo</option>
-              <option>Voltaje monofásico: 127 V</option>
-              <option>Voltaje trifásico: 220 V</option>
+            <select required id="tipo_consumo" name="tipo_consumo" class="input">
+              <option value="" disabled selected>Tipo de consumo</option>
+              <option value="monofa">Voltaje monofásico: 127 V</option>
+              <option value="trifa">Voltaje trifásico: 220 V</option>
             </select>
 
-            <input 
-              required 
-              type="text" 
-              placeholder="Edificio" 
+            <input
+              required
+              id="edificio"
+              name="edificio"
+              type="text"
+              placeholder="Edificio"
               class="input"
             />
 
             <button
               type="submit"
-              class="w-full bg-CFE-800 text-white font-semibold py-3 rounded-lg transition-all hover:bg-CFE-900"
+              class="w-full bg-teal-700 text-white font-semibold py-3 rounded-lg transition-all hover:bg-teal-900"
             >
               Agregar dispositivo
             </button>
-
           </form>
         </div>
       </section>
 
-      <!-- MODAL -->
-      <div id="modal" class="fixed inset-0 bg-black/50 flex items-center justify-center hidden z-50">
+      <div id="modal" class="fixed inset-0 bg-black/50 flex items-center justify-center hidden z-50 px-4">
         <div class="bg-white rounded-xl shadow-2xl p-6 max-w-sm w-full text-center animate-fadeIn">
-
-          <h2 class="text-xl font-bold mb-3 text-CFE-800">
-            Acción no disponible
+          <h2 class="text-xl font-bold mb-3 text-teal-700">
+            Dispositivo registrado correctamente
           </h2>
 
           <p class="text-slate-600 mb-5">
-            No puedes agregar un dispositivo porque no has adquirido ninguno.
+            El dispositivo fue guardado con éxito en la base de datos.
           </p>
 
-          <button id="closeModal"
-            class="bg-CFE-800 text-white px-6 py-2 rounded-lg hover:bg-CFE-900 transition-all">
+          <button
+            id="closeModal"
+            class="bg-teal-700 text-white px-6 py-2 rounded-lg hover:bg-teal-900 transition-all"
+          >
             Entendido
           </button>
-
         </div>
       </div>
-
     </BaseL>
   </main>
 </Layout>
 
 <style>
   .input {
-    @apply w-full p-3 border border-gray-300 rounded-lg outline-none transition-all focus:ring-2 focus:ring-CFE-700;
+    @apply w-full p-3 border border-gray-300 rounded-lg outline-none transition-all focus:ring-2 focus:ring-teal-700;
   }
 
   @keyframes fadeIn {
@@ -124,26 +126,88 @@ import BaseL from '../../layouts/BaseLayout.astro';
 </style>
 
 <script>
-  const form = document.getElementById("dispositivoForm");
-  const modal = document.getElementById("modal");
-  const closeModal = document.getElementById("closeModal");
+  const form = document.getElementById("dispositivoForm") as HTMLFormElement | null;
+  const modal = document.getElementById("modal") as HTMLDivElement | null;
+  const closeModal = document.getElementById("closeModal") as HTMLButtonElement | null;
 
-  if (form && modal && closeModal) {
+  let autoCloseTimer: ReturnType<typeof setTimeout> | null = null;
 
-    form.addEventListener("submit", (e) => {
-      e.preventDefault();
-      modal.classList.remove("hidden");
-    });
+  function showModal() {
+    if (!modal) return;
 
-    closeModal.addEventListener("click", () => {
+    modal.classList.remove("hidden");
+
+    if (autoCloseTimer) {
+      clearTimeout(autoCloseTimer);
+    }
+
+    autoCloseTimer = setTimeout(() => {
       modal.classList.add("hidden");
-    });
-
-    modal.addEventListener("click", (e) => {
-      if (e.target === modal) {
-        modal.classList.add("hidden");
-      }
-    });
-
+    }, 3000);
   }
+
+  function hideModal() {
+    if (!modal) return;
+
+    modal.classList.add("hidden");
+
+    if (autoCloseTimer) {
+      clearTimeout(autoCloseTimer);
+      autoCloseTimer = null;
+    }
+  }
+
+  form?.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const idInput = document.getElementById("id_dispositivo") as HTMLInputElement | null;
+    const nombreInput = document.getElementById("nombre_area") as HTMLInputElement | null;
+    const metrosInput = document.getElementById("metros") as HTMLInputElement | null;
+    const tipoSelect = document.getElementById("tipo_consumo") as HTMLSelectElement | null;
+    const edificioInput = document.getElementById("edificio") as HTMLInputElement | null;
+
+    if (!idInput || !nombreInput || !metrosInput || !tipoSelect || !edificioInput) {
+      alert("Error al obtener los datos del formulario");
+      return;
+    }
+
+    try {
+      const response = await fetch(`${import.meta.env.PUBLIC_API_URL}/api/addDispositivo`, {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          id_dispositivo: idInput.value,
+          nombre_area: nombreInput.value,
+          metros: metrosInput.value,
+          tipo_consumo: tipoSelect.value,
+          edificio: edificioInput.value,
+        }),
+      });
+
+      const result = await response.json().catch(() => null);
+
+      if (!response.ok) {
+        alert(result?.message || "No se pudo registrar el dispositivo");
+        return;
+      }
+
+      form.reset(); 
+      showModal();
+
+    } catch (error) {
+      console.error("Error:", error);
+      alert("Error al registrar el dispositivo");
+    }
+  });
+
+  closeModal?.addEventListener("click", hideModal);
+
+  modal?.addEventListener("click", (e) => {
+    if (e.target === modal) {
+      hideModal();
+    }
+  });
 </script>
