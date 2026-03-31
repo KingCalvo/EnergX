@@ -1,9 +1,15 @@
 import { defineConfig } from "astro/config";
 import react from "@astrojs/react";
-import tailwind from "@astrojs/tailwind";
+import vercel from "@astrojs/vercel";
 
 export default defineConfig({
-  integrations: [tailwind(), react()],
+  integrations: [react()],
+  adapter: vercel(),
+  vite: {
+    ssr: {
+      noExternal: ["@mui/x-charts", "@mui/material"],
+    },
+  },
   devToolbar: {
     enabled: false,
   },
