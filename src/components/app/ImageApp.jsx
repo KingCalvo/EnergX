@@ -1,12 +1,14 @@
 import { useState, useEffect } from "react";
 
 import img1 from "../../assets/Energ-X-Login.png";
-import img2 from "../../assets/Energ-X-Panel.png";
-import img3 from "../../assets/Energ-X-Dispositivo.png";
-import img4 from "../../assets/Energ-X-Areas.png";
+import img2 from "../../assets/Energ-X-SignUp.png";
+import img3 from "../../assets/Energ-X-Panel.png";
+import img4 from "../../assets/Energ-X-Dispositivo.png";
+import img5 from "../../assets/Energ-X-Edificios.png";
+import img6 from "../../assets/Energ-X-Areas.png";
 
 export default function ImageApp() {
-  const images = [img1.src, img2.src, img3.src, img4.src];
+  const images = [img1.src, img2.src, img3.src, img4.src, img5.src, img6.src];
 
   const [index, setIndex] = useState(0);
   const [open, setOpen] = useState(false);

@@ -107,7 +107,7 @@ const resultado = ((promedioDataTwo - promedioData) / promedioData) * 100;
 
             <Mascota client:load>
               <div class="flex items-center justify-center 
-                          w-32 h-32 sm:w-40 sm:h-40 lg:w-52 lg:h-52 
+                          w-40 h-40 sm:w-48 sm:h-48 lg:min-w-56 lg:h-56
                           bg-slate-200 rounded-full p-2 text-center shadow-md">
                 
                 <p class="text-[10px] sm:text-sm leading-tight break-words px-1">
@@ -123,7 +123,7 @@ const resultado = ((promedioDataTwo - promedioData) / promedioData) * 100;
             <Mascota client:load>
               <img
                 src={promedioData > promedioDataTwo ? Happy.src : Sad.src}
-                class="w-32 h-32 sm:w-40 sm:h-40 lg:w-52 lg:h-52 object-contain"
+                class="w-48 h-48 sm:w-40 sm:h-40 lg:w-72 lg:h-72 object-contain"
               />
             </Mascota>
 

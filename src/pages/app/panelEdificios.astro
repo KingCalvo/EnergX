@@ -24,12 +24,16 @@ import { FaBuilding } from "react-icons/fa6";
   <main class="min-h-screen w-full overflow-x-hidden">
     <BaseL>
       <section class="w-full px-4 py-4 sm:px-6 lg:px-8">
-        
+          <div class="w-full text-center mb-6">
+            <h1 class="text-2xl sm:text-4xl font-bold text-teal-800 tracking-tight">
+              Selecciona un edificio para monitorear 
+            </h1>
+          </div>
         <!-- CONTENEDOR -->
         <div 
           id="contenedorEdificios"
           data-img={AreaImg.src}
-          class="mx-auto grid w-full max-w-7xl grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3"
+          class="mx-auto grid w-full max-w-7xl grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 pt-4"
         >
           <p class="text-center col-span-full">Cargando...</p>
         </div>
