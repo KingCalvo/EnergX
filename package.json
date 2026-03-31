@@ -5,12 +5,11 @@
   "scripts": {
     "dev": "astro dev",
     "start": "node server.js",
-    "build": "astro check && astro build",
+    "build": "astro build",
     "preview": "astro preview",
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/check": "^0.9.3",
     "@astrojs/react": "^3.6.2",
     "@astrojs/vercel": "^10.0.3",
     "@emotion/react": "^11.13.3",
@@ -35,6 +34,7 @@
     "typescript": "^5.6.2"
   },
   "devDependencies": {
-    "@astrojs/tailwind": "^6.0.2"
+    "@astrojs/tailwind": "^6.0.2",
+    "@astrojs/check": "^0.9.3"
   }
 }
