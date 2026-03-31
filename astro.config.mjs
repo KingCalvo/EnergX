@@ -5,6 +5,11 @@ import vercel from "@astrojs/vercel";
 export default defineConfig({
   integrations: [react()],
   adapter: vercel(),
+  image: {
+    service: {
+      entrypoint: "astro/assets/services/noop",
+    },
+  },
   vite: {
     ssr: {
       noExternal: ["@mui/x-charts", "@mui/material"],
