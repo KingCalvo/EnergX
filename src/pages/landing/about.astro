@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../../layouts/baseL.astro";
+import { FaGithub, FaLinkedin, FaInstagram, FaEnvelope } from "react-icons/fa";
 ---
 
 <BaseLayout title="About Us">
@@ -8,18 +9,18 @@ import BaseLayout from "../../layouts/baseL.astro";
       
       <!-- Texto -->
       <section class="rounded-3xl bg-white p-6 lg:p-10">
-        <h1 class="mb-6 text-center text-3xl font-bold tracking-tight text-slate-900 sm:text-3xl">
-          SOBRE NOSOTROS
+        <h1 class="mb-6 text-center text-3xl font-bold tracking-tight text-slate-900">
+          Sobre Nosotros
         </h1>
 
         <div class="space-y-5 text-justify leading-7 text-slate-600">
           <p>
-            Somos un grupo de estudiantes de Ingeniería en Sistemas Computacionales, motivados por la innovación tecnológica y comprometidos con la sostenibilidad energética. Nos unimos para desarrollar soluciones que faciliten el consumo inteligente de recursos y promuevan un impacto ambiental positivo. Nuestra propuesta Energ-X, es una respuesta a la creciente necesidad de monitorizar y gestionar el consumo eléctrico de manera eficiente y accesible.
+            Somos un grupo de estudiantes de Ingeniería en Sistemas Computacionales, motivados por la innovación tecnológica y comprometidos con la sostenibilidad energética. Nos unimos para desarrollar soluciones que faciliten el consumo inteligente de recursos y promuevan un impacto ambiental positivo. Nuestra propuesta Energ-X es una respuesta a la creciente necesidad de monitorizar y gestionar el consumo eléctrico de manera eficiente y accesible.
           </p>
 
           <div class="pt-2">
             <h2 class="mb-3 text-center text-2xl font-semibold text-slate-900">
-              NUESTRA SOLUCIÓN
+              Nuestra Solución
             </h2>
             <p>
               Energ-X se presenta como un sistema de monitorización de consumo eléctrico compuesto por dos partes principales: una unidad física y un software inteligente. El dispositivo físico es un módulo compacto y de fácil instalación que se conecta a la red eléctrica, equipado con sensores y un sistema de procesamiento que captura y analiza el consumo energético en tiempo real. Gracias a su módulo Wi-Fi, los datos recopilados se envían a la nube para un análisis detallado.
@@ -29,20 +30,68 @@ import BaseLayout from "../../layouts/baseL.astro";
       </section>
 
       <!-- Ubicación -->
-      <section class="h-full rounded-3xl  bg-white p-6 lg:p-10 flex flex-col">
-        <h2 class="mb-6 text-center text-3xl font-bold tracking-tight text-slate-900 sm:text-3xl">
-          UBICACIÓN
+      <section class="h-full rounded-3xl bg-white p-6 lg:p-10 flex flex-col">
+        <h2 class="mb-6 text-center text-3xl font-bold tracking-tight text-slate-900">
+          Ubicación
         </h2>
         <div class="flex-1 overflow-hidden rounded-2xl border border-slate-200 shadow-md">
           <iframe
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3175.4848845497954!2d-98.92146888575867!3d18.828913962392047!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85ce68d5b6921329%3A0x5491f37abc9f4641!2sInstituto%20Tecnol%C3%B3gico%20de%20Cuautla!5e0!3m2!1ses!2smx!4v1730266458361!5m2!1ses!2smx"
             class="w-full h-full"
             style="border:0;"
-            allowfullscreen
             loading="lazy"
           ></iframe>
         </div>
       </section>
     </div>
+
+    <!-- Contacto -->
+    <div class="mt-12 flex flex-col items-center gap-6">
+
+      <h2 class="text-2xl font-bold text-slate-900">
+        Contacto
+      </h2>
+
+      <p class="text-slate-600 text-center max-w-xl">
+        Puedes conectar conmigo a través de mis redes o enviarme un correo electrónico. Estaré encantado de responder cualquier consulta o colaboración.
+      </p>
+
+      <div class="flex justify-center gap-6 text-2xl sm:text-3xl">
+
+        <a
+          href="https://github.com/KingCalvo"
+          target="_blank"
+          class="bg-slate-200 p-3 rounded-full hover:bg-CFE-700 transition-all duration-300 hover:scale-110"
+        >
+          <FaGithub />
+        </a>
+
+        <a
+          href="https://www.linkedin.com/in/enrique-calvo-garcia-022151168/"
+          target="_blank"
+          class="bg-slate-200 p-3 rounded-full hover:bg-CFE-700 transition-all duration-300 hover:scale-110"
+        >
+          <FaLinkedin />
+        </a>
+
+        <a
+          href="https://www.instagram.com/enriquecalvog/"
+          target="_blank"
+          class="bg-slate-200 p-3 rounded-full hover:bg-CFE-700 transition-all duration-300 hover:scale-110"
+        >
+          <FaInstagram />
+        </a>
+
+        <a
+          href="https://mail.google.com/mail/?view=cm&to=enriquecalvo.dev@gmail.com"
+          class="bg-slate-200 p-3 rounded-full hover:bg-CFE-700 transition-all duration-300 hover:scale-110"
+        >
+          <FaEnvelope />
+        </a>
+
+      </div>
+
+    </div>
+
   </div>
 </BaseLayout>
